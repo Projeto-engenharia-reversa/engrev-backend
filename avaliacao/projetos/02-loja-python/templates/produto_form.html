@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block titulo %}Cadastro de produto{% endblock %}
+
+{% block conteudo %}
+<h2>{% if produto %}Editar produto{% else %}Novo produto{% endif %}</h2>
+
+<form action="/produtos" method="post">
+  <div class="linha">
+    <div class="campo">
+      <label for="sku">SKU</label>
+      <input type="text" id="sku" name="sku" required maxlength="40"
+             value="{{ produto.sku if produto else '' }}">
+    </div>
+
+    <div class="campo">
+      <label for="nome">Nome</label>
+      <input type="text" id="nome" name="nome" required maxlength="200"
+             value="{{ produto.nome if produto else '' }}">
+    </div>
+  </div>
+
+  <div class="campo">
+    <label for="descricao">Descri&ccedil;&atilde;o</label>
+    <textarea id="descricao" name="descricao" rows="5">{{ produto.descricao if produto else '' }}</textarea>
+  </div>
+
+  <div class="linha">
+    <div class="campo">
+      <label for="categoria_id">Categoria</label>
+      <select id="categoria_id" name="categoria_id" required>
+        {% for categoria in categorias %}
+        <option value="{{ categoria.id }}">{{ categoria.nome }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="campo">
+      <label for="preco">Pre&ccedil;o</label>
+      <input type="number" id="preco" name="preco" step="0.01" min="0" required>
+    </div>
+
+    <div class="campo">
+      <label for="preco_promocional">Pre&ccedil;o promocional</label>
+      <input type="number" id="preco_promocional" name="preco_promocional" step="0.01" min="0">
+    </div>
+  </div>
+
+  <div class="linha">
+    <div class="campo">
+      <label for="estoque_atual">Estoque atual</label>
+      <input type="number" id="estoque_atual" name="estoque_atual" min="0" required>
+    </div>
+
+    <div class="campo">
+      <label for="estoque_minimo">Estoque m&iacute;nimo</label>
+      <input type="number" id="estoque_minimo" name="estoque_minimo" min="0">
+    </div>
+
+    <div class="campo">
+      <label for="fornecedor_id">C&oacute;digo do fornecedor (ERP)</label>
+      <input type="number" id="fornecedor_id" name="fornecedor_id">
+    </div>
+  </div>
+
+  <label class="inline">
+    <input type="checkbox" name="ativo" checked> Produto ativo no cat&aacute;logo
+  </label>
+
+  <button type="submit">Salvar</button>
+</form>
+{% endblock %}

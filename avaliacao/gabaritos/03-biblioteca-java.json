@@ -1,0 +1,111 @@
+{
+  "projeto": "03-biblioteca-java",
+  "fonte_da_verdade": "anotações JPA em src/main/java/com/biblioteca/model",
+  "confianca": "alta",
+  "notas": [
+    "CategoriaMembro é enum: aparece como a coluna membros.categoria.",
+    "livro_autor vem do @JoinTable, com chave composta (livro_id, autor_id)."
+  ],
+  "tabelas": {
+    "autores": {
+      "colunas": {
+        "id": "integer",
+        "nome": "string",
+        "nome_ordenacao": "string",
+        "nacionalidade": "string",
+        "data_nascimento": "date",
+        "data_falecimento": "date",
+        "biografia": "string"
+      },
+      "fks": {}
+    },
+    "bibliotecarios": {
+      "colunas": {
+        "id": "integer",
+        "matricula_funcional": "string",
+        "nome": "string",
+        "email": "string",
+        "turno": "string",
+        "admitido_em": "date",
+        "ativo": "boolean"
+      },
+      "fks": {}
+    },
+    "editoras": {
+      "colunas": {
+        "id": "integer",
+        "nome": "string",
+        "cnpj": "string",
+        "cidade": "string",
+        "pais": "string",
+        "site": "string",
+        "contato_email": "string"
+      },
+      "fks": {}
+    },
+    "membros": {
+      "colunas": {
+        "id": "integer",
+        "matricula": "string",
+        "nome": "string",
+        "email": "string",
+        "cpf": "string",
+        "telefone": "string",
+        "data_cadastro": "date",
+        "validade_carteirinha": "date",
+        "categoria": "string",
+        "bloqueado": "boolean"
+      },
+      "fks": {}
+    },
+    "livros": {
+      "colunas": {
+        "id": "integer",
+        "isbn": "string",
+        "titulo": "string",
+        "subtitulo": "string",
+        "ano_publicacao": "integer",
+        "numero_paginas": "integer",
+        "preco_reposicao": "decimal",
+        "adquirido_em": "date",
+        "exemplares_totais": "integer",
+        "exemplares_disponiveis": "integer",
+        "ativo": "boolean",
+        "editora_id": "integer"
+      },
+      "fks": {
+        "editora_id": "editoras"
+      }
+    },
+    "emprestimos": {
+      "colunas": {
+        "id": "integer",
+        "livro_id": "integer",
+        "membro_id": "integer",
+        "bibliotecario_id": "integer",
+        "retirado_em": "date",
+        "previsto_para": "date",
+        "devolvido_em": "date",
+        "renovacoes": "integer",
+        "valor_multa": "decimal",
+        "multa_paga": "boolean",
+        "observacao": "string"
+      },
+      "fks": {
+        "livro_id": "livros",
+        "membro_id": "membros",
+        "bibliotecario_id": "bibliotecarios"
+      }
+    },
+    "livro_autor": {
+      "colunas": {
+        "livro_id": "integer",
+        "autor_id": "integer"
+      },
+      "fks": {
+        "livro_id": "livros",
+        "autor_id": "autores"
+      }
+    }
+  }
+}

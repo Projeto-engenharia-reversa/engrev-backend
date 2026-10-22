@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Relat&oacute;rios</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="topo">
+    <h1>Central de Chamados</h1>
+    <nav>
+      <a href="chamados.html">Chamados</a>
+      <a href="novo-chamado.html">Abrir chamado</a>
+      <a href="cliente.html">Clientes</a>
+      <a href="relatorio.html" class="ativo">Relat&oacute;rios</a>
+    </nav>
+  </header>
+
+  <main class="conteudo">
+    <h2>Relat&oacute;rios gerenciais</h2>
+
+    <!-- Periodo tratado no cliente; a exportacao chama o script legado em PHP -->
+    <div class="filtros">
+      <label for="periodo-inicio">De</label>
+      <input type="date" id="periodo-inicio">
+
+      <label for="periodo-fim">At&eacute;</label>
+      <input type="date" id="periodo-fim">
+
+      <button type="button" onclick="App.calcularIndicadores()">Atualizar</button>
+      <button type="button" onclick="App.exportarCsv()">Exportar CSV</button>
+    </div>
+
+    <section class="indicadores">
+      <article class="cartao">
+        <span class="rotulo">Chamados abertos</span>
+        <strong id="ind-abertos">0</strong>
+      </article>
+      <article class="cartao">
+        <span class="rotulo">Fechados no per&iacute;odo</span>
+        <strong id="ind-fechados">0</strong>
+      </article>
+      <article class="cartao">
+        <span class="rotulo">Tempo m&eacute;dio de atendimento</span>
+        <strong id="ind-tempo-medio">&mdash;</strong>
+      </article>
+      <article class="cartao">
+        <span class="rotulo">Fora do SLA</span>
+        <strong id="ind-fora-sla">0</strong>
+      </article>
+    </section>
+
+    <h3>Chamados por categoria</h3>
+    <table id="tabela-categorias">
+      <thead>
+        <tr>
+          <th>Categoria</th>
+          <th>SLA (horas)</th>
+          <th>Abertos</th>
+          <th>Fechados</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <h3>Carga por t&eacute;cnico</h3>
+    <table id="tabela-tecnicos">
+      <thead>
+        <tr>
+          <th>T&eacute;cnico</th>
+          <th>Equipe</th>
+          <th>Em atendimento</th>
+          <th>Fechados no per&iacute;odo</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </main>
+
+  <script src="js/models.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    App.calcularIndicadores();
+  </script>
+</body>
+</html>

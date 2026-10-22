@@ -1,0 +1,8 @@
+{
+  "nome": "Infraestrutura de Rede",
+  "descricao": "Falhas de conectividade, VPN, switches e pontos de acesso",
+  "sla_horas": 4,
+  "equipe_responsavel": "NOC",
+  "exige_aprovacao": false,
+  "ativo": true
+}

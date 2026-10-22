@@ -1,0 +1,70 @@
+{
+  "projeto": "nestjs-realworld-example-app",
+  "externo": true,
+  "origem": "https://github.com/lujakob/nestjs-realworld-example-app",
+  "fonte_da_verdade": "src/**/*.entity.ts, entidades TypeORM",
+  "arquivos_de_schema": [
+    ".entity.ts"
+  ],
+  "nota_sem_schema": "Sai tudo que declara coluna e tipo, que no TypeORM está inteiro nos *.entity.ts. Sobram controllers, services, DTOs e interfaces.",
+  "confianca": "alta",
+  "notas": [
+    "Os nomes vêm do @Entity('...') e estão no singular. Comment usa @Entity() sem nome, e vale o nome da classe.",
+    "A tabela de junção de favorites não entra: o TypeORM a cria, mas o nome dela não é declarado no código.",
+    "tag_list é @Column('simple-array'): a lista é serializada em texto."
+  ],
+  "tabelas": {
+    "user": {
+      "colunas": {
+        "id": "integer",
+        "username": "string",
+        "email": "string",
+        "bio": "string",
+        "image": "string",
+        "password": "string"
+      },
+      "fks": {}
+    },
+    "article": {
+      "colunas": {
+        "id": "integer",
+        "slug": "string",
+        "title": "string",
+        "description": "string",
+        "body": "string",
+        "created": "datetime",
+        "updated": "datetime",
+        "tag_list": "string",
+        "author_id": "integer"
+      },
+      "fks": {
+        "author_id": "user"
+      }
+    },
+    "comment": {
+      "colunas": {
+        "id": "integer",
+        "body": "string",
+        "article_id": "integer"
+      },
+      "fks": {
+        "article_id": "article"
+      }
+    },
+    "tag": {
+      "colunas": {
+        "id": "integer",
+        "tag": "string"
+      },
+      "fks": {}
+    },
+    "follows": {
+      "colunas": {
+        "id": "integer",
+        "follower_id": "integer",
+        "following_id": "integer"
+      },
+      "fks": {}
+    }
+  }
+}

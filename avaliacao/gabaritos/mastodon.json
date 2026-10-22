@@ -1,0 +1,1839 @@
+{
+  "projeto": "mastodon",
+  "externo": true,
+  "origem": "https://github.com/mastodon/mastodon",
+  "fonte_da_verdade": "db/schema.rb, transcrito por script",
+  "confianca": "alta",
+  "notas": [
+    "Coluna com array: true vira json, e toda tabela ganha id.",
+    "escopo: escala mantém este projeto fora da média de acurácia. Para incluí-lo, use avaliar.py --incluir-escala."
+  ],
+  "arquivos_de_schema": [
+    "db/"
+  ],
+  "tabelas": {
+    "account_aliases": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "acct": "string",
+        "created_at": "datetime",
+        "updated_at": "datetime",
+        "uri": "string"
+      },
+      "fks": {
+        "account_id": "accounts"
+      }
+    },
+    "account_conversations": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "conversation_id": "integer",
+        "last_status_id": "integer",
+        "lock_version": "integer",
+        "participant_account_ids": "json",
+        "status_ids": "json",
+        "unread": "boolean"
+      },
+      "fks": {
+        "account_id": "accounts",
+        "conversation_id": "conversations"
+      }
+    },
+    "account_deletion_requests": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "created_at": "datetime",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "account_id": "accounts"
+      }
+    },
+    "account_domain_blocks": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "created_at": "datetime",
+        "domain": "string",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "account_id": "accounts"
+      }
+    },
+    "account_migrations": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "acct": "string",
+        "created_at": "datetime",
+        "followers_count": "integer",
+        "target_account_id": "integer",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "target_account_id": "accounts",
+        "account_id": "accounts"
+      }
+    },
+    "account_moderation_notes": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "content": "string",
+        "created_at": "datetime",
+        "target_account_id": "integer",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "target_account_id": "accounts",
+        "account_id": "accounts"
+      }
+    },
+    "account_notes": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "comment": "string",
+        "created_at": "datetime",
+        "target_account_id": "integer",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "target_account_id": "accounts",
+        "account_id": "accounts"
+      }
+    },
+    "account_pins": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "created_at": "datetime",
+        "target_account_id": "integer",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "target_account_id": "accounts",
+        "account_id": "accounts"
+      }
+    },
+    "account_relationship_severance_events": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "created_at": "datetime",
+        "followers_count": "integer",
+        "following_count": "integer",
+        "relationship_severance_event_id": "integer",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "account_id": "accounts",
+        "relationship_severance_event_id": "relationship_severance_events"
+      }
+    },
+    "account_stats": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "created_at": "datetime",
+        "followers_count": "integer",
+        "following_count": "integer",
+        "last_status_at": "datetime",
+        "statuses_count": "integer",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "account_id": "accounts"
+      }
+    },
+    "account_statuses_cleanup_policies": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "created_at": "datetime",
+        "enabled": "boolean",
+        "keep_direct": "boolean",
+        "keep_media": "boolean",
+        "keep_pinned": "boolean",
+        "keep_polls": "boolean",
+        "keep_self_bookmark": "boolean",
+        "keep_self_fav": "boolean",
+        "min_favs": "integer",
+        "min_reblogs": "integer",
+        "min_status_age": "integer",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "account_id": "accounts"
+      }
+    },
+    "account_summaries": {
+      "colunas": {
+        "id": "integer",
+        "language": "string",
+        "sensitive": "boolean"
+      },
+      "fks": {}
+    },
+    "account_warning_presets": {
+      "colunas": {
+        "id": "integer",
+        "created_at": "datetime",
+        "text": "string",
+        "title": "string",
+        "updated_at": "datetime"
+      },
+      "fks": {}
+    },
+    "account_warnings": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "action": "integer",
+        "created_at": "datetime",
+        "overruled_at": "datetime",
+        "report_id": "integer",
+        "status_ids": "json",
+        "target_account_id": "integer",
+        "text": "string",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "target_account_id": "accounts",
+        "account_id": "accounts",
+        "report_id": "reports"
+      }
+    },
+    "accounts": {
+      "colunas": {
+        "id": "integer",
+        "actor_type": "string",
+        "also_known_as": "json",
+        "attribution_domains": "json",
+        "avatar_content_type": "string",
+        "avatar_description": "string",
+        "avatar_file_name": "string",
+        "avatar_file_size": "integer",
+        "avatar_remote_url": "string",
+        "avatar_storage_schema_version": "integer",
+        "avatar_updated_at": "datetime",
+        "collections_url": "string",
+        "created_at": "datetime",
+        "discoverable": "boolean",
+        "display_name": "string",
+        "domain": "string",
+        "feature_approval_policy": "integer",
+        "featured_collection_url": "string",
+        "fields": "json",
+        "followers_url": "string",
+        "following_url": "string",
+        "header_content_type": "string",
+        "header_description": "string",
+        "header_file_name": "string",
+        "header_file_size": "integer",
+        "header_remote_url": "string",
+        "header_storage_schema_version": "integer",
+        "header_updated_at": "datetime",
+        "hide_collections": "boolean",
+        "id_scheme": "integer",
+        "inbox_url": "string",
+        "indexable": "boolean",
+        "last_webfingered_at": "datetime",
+        "locked": "boolean",
+        "memorial": "boolean",
+        "moved_to_account_id": "integer",
+        "note": "string",
+        "outbox_url": "string",
+        "private_key": "string",
+        "protocol": "integer",
+        "public_key": "string",
+        "requested_deletion_at": "datetime",
+        "requested_review_at": "datetime",
+        "reviewed_at": "datetime",
+        "sensitized_at": "datetime",
+        "shared_inbox_url": "string",
+        "show_featured": "boolean",
+        "show_media": "boolean",
+        "show_media_replies": "boolean",
+        "silenced_at": "datetime",
+        "suspended_at": "datetime",
+        "suspension_origin": "integer",
+        "trendable": "boolean",
+        "updated_at": "datetime",
+        "uri": "string",
+        "url": "string",
+        "username": "string"
+      },
+      "fks": {
+        "moved_to_account_id": "accounts"
+      }
+    },
+    "accounts_tags": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "tag_id": "integer"
+      },
+      "fks": {}
+    },
+    "admin_action_logs": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "action": "string",
+        "created_at": "datetime",
+        "human_identifier": "string",
+        "permalink": "string",
+        "recorded_changes": "json",
+        "recorded_changes_format": "string",
+        "route_param": "string",
+        "target_id": "integer",
+        "target_type": "string",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "account_id": "accounts"
+      }
+    },
+    "announcement_mutes": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "announcement_id": "integer",
+        "created_at": "datetime",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "account_id": "accounts",
+        "announcement_id": "announcements"
+      }
+    },
+    "announcement_reactions": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "announcement_id": "integer",
+        "created_at": "datetime",
+        "custom_emoji_id": "integer",
+        "name": "string",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "account_id": "accounts",
+        "announcement_id": "announcements",
+        "custom_emoji_id": "custom_emojis"
+      }
+    },
+    "announcements": {
+      "colunas": {
+        "id": "integer",
+        "all_day": "boolean",
+        "created_at": "datetime",
+        "ends_at": "datetime",
+        "notification_sent_at": "datetime",
+        "published": "boolean",
+        "published_at": "datetime",
+        "scheduled_at": "datetime",
+        "starts_at": "datetime",
+        "status_ids": "json",
+        "text": "string",
+        "updated_at": "datetime"
+      },
+      "fks": {}
+    },
+    "annual_report_statuses_per_account_counts": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "statuses_count": "integer",
+        "year": "integer"
+      },
+      "fks": {}
+    },
+    "appeals": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "account_warning_id": "integer",
+        "approved_at": "datetime",
+        "approved_by_account_id": "integer",
+        "created_at": "datetime",
+        "rejected_at": "datetime",
+        "rejected_by_account_id": "integer",
+        "text": "string",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "account_warning_id": "account_warnings",
+        "approved_by_account_id": "accounts",
+        "rejected_by_account_id": "accounts",
+        "account_id": "accounts"
+      }
+    },
+    "backups": {
+      "colunas": {
+        "id": "integer",
+        "created_at": "datetime",
+        "dump_content_type": "string",
+        "dump_file_name": "string",
+        "dump_file_size": "integer",
+        "dump_updated_at": "datetime",
+        "processed": "boolean",
+        "updated_at": "datetime",
+        "user_id": "integer"
+      },
+      "fks": {
+        "user_id": "users"
+      }
+    },
+    "blocks": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "created_at": "datetime",
+        "target_account_id": "integer",
+        "updated_at": "datetime",
+        "uri": "string"
+      },
+      "fks": {
+        "target_account_id": "accounts",
+        "account_id": "accounts"
+      }
+    },
+    "bookmarks": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "created_at": "datetime",
+        "status_id": "integer",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "account_id": "accounts"
+      }
+    },
+    "bulk_import_rows": {
+      "colunas": {
+        "id": "integer",
+        "bulk_import_id": "integer",
+        "created_at": "datetime",
+        "data": "json",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "bulk_import_id": "bulk_imports"
+      }
+    },
+    "bulk_imports": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "created_at": "datetime",
+        "finished_at": "datetime",
+        "imported_items": "integer",
+        "likely_mismatched": "boolean",
+        "missing_status": "boolean",
+        "original_filename": "string",
+        "overwrite": "boolean",
+        "processed_items": "integer",
+        "state": "integer",
+        "total_items": "integer",
+        "type": "integer",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "account_id": "accounts"
+      }
+    },
+    "canonical_email_blocks": {
+      "colunas": {
+        "id": "integer",
+        "canonical_email_hash": "string",
+        "created_at": "datetime",
+        "reference_account_id": "integer",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "reference_account_id": "accounts"
+      }
+    },
+    "collection_items": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "activity_uri": "string",
+        "approval_last_verified_at": "datetime",
+        "approval_uri": "string",
+        "collection_id": "integer",
+        "created_at": "datetime",
+        "object_uri": "string",
+        "position": "integer",
+        "state": "integer",
+        "updated_at": "datetime",
+        "uri": "string"
+      },
+      "fks": {
+        "account_id": "accounts",
+        "collection_id": "collections"
+      }
+    },
+    "collection_reports": {
+      "colunas": {
+        "id": "integer",
+        "collection_id": "integer",
+        "created_at": "datetime",
+        "report_id": "integer",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "collection_id": "collections",
+        "report_id": "reports"
+      }
+    },
+    "collections": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "created_at": "datetime",
+        "description": "string",
+        "description_html": "string",
+        "discoverable": "boolean",
+        "item_count": "integer",
+        "language": "string",
+        "local": "boolean",
+        "name": "string",
+        "original_number_of_items": "integer",
+        "sensitive": "boolean",
+        "tag_id": "integer",
+        "updated_at": "datetime",
+        "uri": "string",
+        "url": "string"
+      },
+      "fks": {
+        "account_id": "accounts",
+        "tag_id": "tags"
+      }
+    },
+    "conversation_mutes": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "conversation_id": "integer"
+      },
+      "fks": {
+        "account_id": "accounts",
+        "conversation_id": "conversations"
+      }
+    },
+    "conversations": {
+      "colunas": {
+        "id": "integer",
+        "created_at": "datetime",
+        "parent_account_id": "integer",
+        "parent_status_id": "integer",
+        "updated_at": "datetime",
+        "uri": "string"
+      },
+      "fks": {}
+    },
+    "custom_emoji_categories": {
+      "colunas": {
+        "id": "integer",
+        "created_at": "datetime",
+        "featured_emoji_id": "integer",
+        "name": "string",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "featured_emoji_id": "custom_emojis"
+      }
+    },
+    "custom_emojis": {
+      "colunas": {
+        "id": "integer",
+        "category_id": "integer",
+        "created_at": "datetime",
+        "disabled": "boolean",
+        "domain": "string",
+        "image_content_type": "string",
+        "image_file_name": "string",
+        "image_file_size": "integer",
+        "image_remote_url": "string",
+        "image_storage_schema_version": "integer",
+        "image_updated_at": "datetime",
+        "shortcode": "string",
+        "updated_at": "datetime",
+        "uri": "string",
+        "visible_in_picker": "boolean"
+      },
+      "fks": {}
+    },
+    "custom_filter_keywords": {
+      "colunas": {
+        "id": "integer",
+        "created_at": "datetime",
+        "custom_filter_id": "integer",
+        "keyword": "string",
+        "updated_at": "datetime",
+        "whole_word": "boolean"
+      },
+      "fks": {
+        "custom_filter_id": "custom_filters"
+      }
+    },
+    "custom_filter_statuses": {
+      "colunas": {
+        "id": "integer",
+        "created_at": "datetime",
+        "custom_filter_id": "integer",
+        "status_id": "integer",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "custom_filter_id": "custom_filters"
+      }
+    },
+    "custom_filters": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "action": "integer",
+        "context": "json",
+        "created_at": "datetime",
+        "expires_at": "datetime",
+        "phrase": "string",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "account_id": "accounts"
+      }
+    },
+    "domain_allows": {
+      "colunas": {
+        "id": "integer",
+        "created_at": "datetime",
+        "domain": "string",
+        "updated_at": "datetime"
+      },
+      "fks": {}
+    },
+    "domain_blocks": {
+      "colunas": {
+        "id": "integer",
+        "created_at": "datetime",
+        "domain": "string",
+        "obfuscate": "boolean",
+        "private_comment": "string",
+        "public_comment": "string",
+        "reject_media": "boolean",
+        "reject_reports": "boolean",
+        "severity": "integer",
+        "updated_at": "datetime"
+      },
+      "fks": {}
+    },
+    "email_domain_blocks": {
+      "colunas": {
+        "id": "integer",
+        "allow_with_approval": "boolean",
+        "created_at": "datetime",
+        "domain": "string",
+        "parent_id": "integer",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "parent_id": "email_domain_blocks"
+      }
+    },
+    "email_subscriptions": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "confirmation_token": "string",
+        "confirmed_at": "datetime",
+        "created_at": "datetime",
+        "email": "string",
+        "locale": "string",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "account_id": "accounts"
+      }
+    },
+    "fasp_backfill_requests": {
+      "colunas": {
+        "id": "integer",
+        "category": "string",
+        "created_at": "datetime",
+        "cursor": "string",
+        "fasp_provider_id": "integer",
+        "fulfilled": "boolean",
+        "max_count": "integer",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "fasp_provider_id": "fasp_providers"
+      }
+    },
+    "fasp_debug_callbacks": {
+      "colunas": {
+        "id": "integer",
+        "created_at": "datetime",
+        "fasp_provider_id": "integer",
+        "ip": "string",
+        "request_body": "string",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "fasp_provider_id": "fasp_providers"
+      }
+    },
+    "fasp_follow_recommendations": {
+      "colunas": {
+        "id": "integer",
+        "created_at": "datetime",
+        "recommended_account_id": "integer",
+        "requesting_account_id": "integer",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "recommended_account_id": "accounts",
+        "requesting_account_id": "accounts"
+      }
+    },
+    "fasp_providers": {
+      "colunas": {
+        "id": "integer",
+        "base_url": "string",
+        "capabilities": "json",
+        "confirmed": "boolean",
+        "contact_email": "string",
+        "created_at": "datetime",
+        "delivery_last_failed_at": "datetime",
+        "fediverse_account": "string",
+        "name": "string",
+        "privacy_policy": "json",
+        "provider_public_key_pem": "string",
+        "remote_identifier": "string",
+        "server_private_key_pem": "string",
+        "sign_in_url": "string",
+        "updated_at": "datetime"
+      },
+      "fks": {}
+    },
+    "fasp_subscriptions": {
+      "colunas": {
+        "id": "integer",
+        "category": "string",
+        "created_at": "datetime",
+        "fasp_provider_id": "integer",
+        "max_batch_size": "integer",
+        "subscription_type": "string",
+        "threshold_likes": "integer",
+        "threshold_replies": "integer",
+        "threshold_shares": "integer",
+        "threshold_timeframe": "integer",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "fasp_provider_id": "fasp_providers"
+      }
+    },
+    "favourites": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "created_at": "datetime",
+        "status_id": "integer",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "account_id": "accounts"
+      }
+    },
+    "featured_tags": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "created_at": "datetime",
+        "last_status_at": "datetime",
+        "name": "string",
+        "statuses_count": "integer",
+        "tag_id": "integer",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "account_id": "accounts",
+        "tag_id": "tags"
+      }
+    },
+    "follow_recommendation_mutes": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "created_at": "datetime",
+        "target_account_id": "integer",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "target_account_id": "accounts",
+        "account_id": "accounts"
+      }
+    },
+    "follow_recommendation_suppressions": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "created_at": "datetime",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "account_id": "accounts"
+      }
+    },
+    "follow_requests": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "created_at": "datetime",
+        "languages": "json",
+        "notify": "boolean",
+        "show_reblogs": "boolean",
+        "target_account_id": "integer",
+        "updated_at": "datetime",
+        "uri": "string"
+      },
+      "fks": {
+        "target_account_id": "accounts",
+        "account_id": "accounts"
+      }
+    },
+    "follows": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "created_at": "datetime",
+        "languages": "json",
+        "notify": "boolean",
+        "show_reblogs": "boolean",
+        "target_account_id": "integer",
+        "updated_at": "datetime",
+        "uri": "string"
+      },
+      "fks": {
+        "target_account_id": "accounts",
+        "account_id": "accounts"
+      }
+    },
+    "generated_annual_reports": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "created_at": "datetime",
+        "data": "json",
+        "schema_version": "integer",
+        "share_key": "string",
+        "updated_at": "datetime",
+        "viewed_at": "datetime",
+        "year": "integer"
+      },
+      "fks": {
+        "account_id": "accounts"
+      }
+    },
+    "global_follow_recommendations": {
+      "colunas": {
+        "id": "integer",
+        "rank": "decimal",
+        "reason": "json",
+        "stale": "boolean"
+      },
+      "fks": {}
+    },
+    "identities": {
+      "colunas": {
+        "id": "integer",
+        "created_at": "datetime",
+        "provider": "string",
+        "uid": "string",
+        "updated_at": "datetime",
+        "user_id": "integer"
+      },
+      "fks": {
+        "user_id": "users"
+      }
+    },
+    "instance_moderation_notes": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "content": "string",
+        "created_at": "datetime",
+        "domain": "string",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "account_id": "accounts"
+      }
+    },
+    "invites": {
+      "colunas": {
+        "id": "integer",
+        "autofollow": "boolean",
+        "code": "string",
+        "comment": "string",
+        "created_at": "datetime",
+        "expires_at": "datetime",
+        "max_uses": "integer",
+        "updated_at": "datetime",
+        "user_id": "integer",
+        "uses": "integer"
+      },
+      "fks": {
+        "user_id": "users"
+      }
+    },
+    "ip_blocks": {
+      "colunas": {
+        "id": "integer",
+        "comment": "string",
+        "created_at": "datetime",
+        "expires_at": "datetime",
+        "ip": "string",
+        "severity": "integer",
+        "updated_at": "datetime"
+      },
+      "fks": {}
+    },
+    "keypairs": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "created_at": "datetime",
+        "expires_at": "datetime",
+        "local_fragment": "string",
+        "private_key": "string",
+        "public_key": "string",
+        "revoked": "boolean",
+        "type": "integer",
+        "updated_at": "datetime",
+        "uri": "string"
+      },
+      "fks": {
+        "account_id": "accounts"
+      }
+    },
+    "list_accounts": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "follow_id": "integer",
+        "follow_request_id": "integer",
+        "list_id": "integer"
+      },
+      "fks": {
+        "account_id": "accounts",
+        "follow_request_id": "follow_requests",
+        "follow_id": "follows",
+        "list_id": "lists"
+      }
+    },
+    "lists": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "created_at": "datetime",
+        "exclusive": "boolean",
+        "replies_policy": "integer",
+        "title": "string",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "account_id": "accounts"
+      }
+    },
+    "login_activities": {
+      "colunas": {
+        "id": "integer",
+        "authentication_method": "string",
+        "created_at": "datetime",
+        "failure_reason": "string",
+        "ip": "string",
+        "provider": "string",
+        "success": "boolean",
+        "user_agent": "string",
+        "user_id": "integer"
+      },
+      "fks": {
+        "user_id": "users"
+      }
+    },
+    "markers": {
+      "colunas": {
+        "id": "integer",
+        "created_at": "datetime",
+        "last_read_id": "integer",
+        "lock_version": "integer",
+        "timeline": "string",
+        "updated_at": "datetime",
+        "user_id": "integer"
+      },
+      "fks": {
+        "user_id": "users"
+      }
+    },
+    "media_attachments": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "blurhash": "string",
+        "created_at": "datetime",
+        "description": "string",
+        "file_content_type": "string",
+        "file_file_name": "string",
+        "file_file_size": "integer",
+        "file_meta": "json",
+        "file_storage_schema_version": "integer",
+        "file_updated_at": "datetime",
+        "processing": "integer",
+        "remote_url": "string",
+        "scheduled_status_id": "integer",
+        "shortcode": "string",
+        "status_id": "integer",
+        "thumbnail_content_type": "string",
+        "thumbnail_file_name": "string",
+        "thumbnail_file_size": "integer",
+        "thumbnail_remote_url": "string",
+        "thumbnail_storage_schema_version": "integer",
+        "thumbnail_updated_at": "datetime",
+        "type": "integer",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "account_id": "accounts"
+      }
+    },
+    "mentions": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "created_at": "datetime",
+        "silent": "boolean",
+        "status_id": "integer",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "account_id": "accounts"
+      }
+    },
+    "mutes": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "created_at": "datetime",
+        "expires_at": "datetime",
+        "hide_notifications": "boolean",
+        "target_account_id": "integer",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "target_account_id": "accounts",
+        "account_id": "accounts"
+      }
+    },
+    "notification_permissions": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "created_at": "datetime",
+        "from_account_id": "integer",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "from_account_id": "accounts",
+        "account_id": "accounts"
+      }
+    },
+    "notification_policies": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "created_at": "datetime",
+        "for_bots": "integer",
+        "for_limited_accounts": "integer",
+        "for_new_accounts": "integer",
+        "for_not_followers": "integer",
+        "for_not_following": "integer",
+        "for_private_mentions": "integer",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "account_id": "accounts"
+      }
+    },
+    "notification_requests": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "created_at": "datetime",
+        "from_account_id": "integer",
+        "last_status_id": "integer",
+        "notifications_count": "integer",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "from_account_id": "accounts",
+        "account_id": "accounts",
+        "last_status_id": "statuses"
+      }
+    },
+    "notifications": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "activity_id": "integer",
+        "activity_type": "string",
+        "created_at": "datetime",
+        "filtered": "boolean",
+        "from_account_id": "integer",
+        "group_key": "string",
+        "type": "string",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "from_account_id": "accounts",
+        "account_id": "accounts"
+      }
+    },
+    "oauth_access_grants": {
+      "colunas": {
+        "id": "integer",
+        "application_id": "integer",
+        "code_challenge": "string",
+        "code_challenge_method": "string",
+        "created_at": "datetime",
+        "expires_in": "integer",
+        "redirect_uri": "string",
+        "resource_owner_id": "integer",
+        "revoked_at": "datetime",
+        "scopes": "string",
+        "token": "string"
+      },
+      "fks": {
+        "application_id": "oauth_applications",
+        "resource_owner_id": "users"
+      }
+    },
+    "oauth_access_tokens": {
+      "colunas": {
+        "id": "integer",
+        "application_id": "integer",
+        "created_at": "datetime",
+        "expires_in": "integer",
+        "last_used_at": "datetime",
+        "last_used_ip": "string",
+        "refresh_token": "string",
+        "resource_owner_id": "integer",
+        "revoked_at": "datetime",
+        "scopes": "string",
+        "token": "string"
+      },
+      "fks": {
+        "application_id": "oauth_applications",
+        "resource_owner_id": "users"
+      }
+    },
+    "oauth_applications": {
+      "colunas": {
+        "id": "integer",
+        "confidential": "boolean",
+        "created_at": "datetime",
+        "name": "string",
+        "owner_id": "integer",
+        "owner_type": "string",
+        "redirect_uri": "string",
+        "scopes": "string",
+        "secret": "string",
+        "superapp": "boolean",
+        "uid": "string",
+        "updated_at": "datetime",
+        "website": "string"
+      },
+      "fks": {
+        "owner_id": "users"
+      }
+    },
+    "pghero_space_stats": {
+      "colunas": {
+        "id": "integer",
+        "captured_at": "datetime",
+        "database": "string",
+        "relation": "string",
+        "schema": "string",
+        "size": "integer"
+      },
+      "fks": {}
+    },
+    "poll_votes": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "choice": "integer",
+        "created_at": "datetime",
+        "poll_id": "integer",
+        "updated_at": "datetime",
+        "uri": "string"
+      },
+      "fks": {
+        "account_id": "accounts",
+        "poll_id": "polls"
+      }
+    },
+    "polls": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "cached_tallies": "json",
+        "created_at": "datetime",
+        "expires_at": "datetime",
+        "hide_totals": "boolean",
+        "last_fetched_at": "datetime",
+        "lock_version": "integer",
+        "multiple": "boolean",
+        "options": "json",
+        "status_id": "integer",
+        "updated_at": "datetime",
+        "voters_count": "integer",
+        "votes_count": "integer"
+      },
+      "fks": {
+        "account_id": "accounts"
+      }
+    },
+    "preview_card_providers": {
+      "colunas": {
+        "id": "integer",
+        "created_at": "datetime",
+        "domain": "string",
+        "icon_content_type": "string",
+        "icon_file_name": "string",
+        "icon_file_size": "integer",
+        "icon_updated_at": "datetime",
+        "requested_review_at": "datetime",
+        "reviewed_at": "datetime",
+        "trendable": "boolean",
+        "updated_at": "datetime"
+      },
+      "fks": {}
+    },
+    "preview_card_trends": {
+      "colunas": {
+        "id": "integer",
+        "allowed": "boolean",
+        "language": "string",
+        "preview_card_id": "integer",
+        "rank": "integer",
+        "score": "decimal"
+      },
+      "fks": {
+        "preview_card_id": "preview_cards"
+      }
+    },
+    "preview_cards": {
+      "colunas": {
+        "id": "integer",
+        "author_account_id": "integer",
+        "author_name": "string",
+        "author_url": "string",
+        "blurhash": "string",
+        "created_at": "datetime",
+        "description": "string",
+        "embed_url": "string",
+        "height": "integer",
+        "html": "string",
+        "image_content_type": "string",
+        "image_description": "string",
+        "image_file_name": "string",
+        "image_file_size": "integer",
+        "image_storage_schema_version": "integer",
+        "image_updated_at": "datetime",
+        "language": "string",
+        "link_type": "integer",
+        "max_score": "decimal",
+        "max_score_at": "datetime",
+        "provider_name": "string",
+        "provider_url": "string",
+        "published_at": "datetime",
+        "title": "string",
+        "trendable": "boolean",
+        "type": "integer",
+        "unverified_author_account_id": "integer",
+        "updated_at": "datetime",
+        "url": "string",
+        "width": "integer"
+      },
+      "fks": {
+        "author_account_id": "accounts",
+        "unverified_author_account_id": "accounts"
+      }
+    },
+    "preview_cards_statuses": {
+      "colunas": {
+        "id": "integer",
+        "preview_card_id": "integer",
+        "status_id": "integer",
+        "url": "string"
+      },
+      "fks": {}
+    },
+    "quotes": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "activity_uri": "string",
+        "approval_uri": "string",
+        "created_at": "datetime",
+        "legacy": "boolean",
+        "quoted_account_id": "integer",
+        "quoted_status_id": "integer",
+        "state": "integer",
+        "status_id": "integer",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "quoted_account_id": "accounts",
+        "account_id": "accounts",
+        "quoted_status_id": "statuses"
+      }
+    },
+    "relationship_severance_events": {
+      "colunas": {
+        "id": "integer",
+        "created_at": "datetime",
+        "purged": "boolean",
+        "target_name": "string",
+        "type": "integer",
+        "updated_at": "datetime"
+      },
+      "fks": {}
+    },
+    "relays": {
+      "colunas": {
+        "id": "integer",
+        "created_at": "datetime",
+        "follow_activity_id": "string",
+        "inbox_url": "string",
+        "state": "integer",
+        "updated_at": "datetime"
+      },
+      "fks": {}
+    },
+    "report_notes": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "content": "string",
+        "created_at": "datetime",
+        "report_id": "integer",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "account_id": "accounts",
+        "report_id": "reports"
+      }
+    },
+    "reports": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "action_taken_at": "datetime",
+        "action_taken_by_account_id": "integer",
+        "application_id": "integer",
+        "assigned_account_id": "integer",
+        "category": "integer",
+        "comment": "string",
+        "created_at": "datetime",
+        "forwarded": "boolean",
+        "rule_ids": "json",
+        "status_ids": "json",
+        "target_account_id": "integer",
+        "updated_at": "datetime",
+        "uri": "string"
+      },
+      "fks": {
+        "action_taken_by_account_id": "accounts",
+        "assigned_account_id": "accounts",
+        "target_account_id": "accounts",
+        "account_id": "accounts",
+        "application_id": "oauth_applications"
+      }
+    },
+    "rule_translations": {
+      "colunas": {
+        "id": "integer",
+        "created_at": "datetime",
+        "hint": "string",
+        "language": "string",
+        "rule_id": "integer",
+        "text": "string",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "rule_id": "rules"
+      }
+    },
+    "rules": {
+      "colunas": {
+        "id": "integer",
+        "created_at": "datetime",
+        "deleted_at": "datetime",
+        "hint": "string",
+        "priority": "integer",
+        "text": "string",
+        "updated_at": "datetime"
+      },
+      "fks": {}
+    },
+    "scheduled_statuses": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "params": "json",
+        "scheduled_at": "datetime"
+      },
+      "fks": {
+        "account_id": "accounts"
+      }
+    },
+    "session_activations": {
+      "colunas": {
+        "id": "integer",
+        "access_token_id": "integer",
+        "created_at": "datetime",
+        "ip": "string",
+        "session_id": "string",
+        "updated_at": "datetime",
+        "user_agent": "string",
+        "user_id": "integer",
+        "web_push_subscription_id": "integer"
+      },
+      "fks": {
+        "access_token_id": "oauth_access_tokens",
+        "user_id": "users"
+      }
+    },
+    "settings": {
+      "colunas": {
+        "id": "integer",
+        "created_at": "datetime",
+        "updated_at": "datetime",
+        "value": "string",
+        "var": "string"
+      },
+      "fks": {}
+    },
+    "severed_relationships": {
+      "colunas": {
+        "id": "integer",
+        "created_at": "datetime",
+        "direction": "integer",
+        "languages": "json",
+        "local_account_id": "integer",
+        "notify": "boolean",
+        "relationship_severance_event_id": "integer",
+        "remote_account_id": "integer",
+        "show_reblogs": "boolean",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "local_account_id": "accounts",
+        "remote_account_id": "accounts",
+        "relationship_severance_event_id": "relationship_severance_events"
+      }
+    },
+    "site_uploads": {
+      "colunas": {
+        "id": "integer",
+        "blurhash": "string",
+        "created_at": "datetime",
+        "file_content_type": "string",
+        "file_file_name": "string",
+        "file_file_size": "integer",
+        "file_updated_at": "datetime",
+        "meta": "json",
+        "updated_at": "datetime",
+        "var": "string"
+      },
+      "fks": {}
+    },
+    "software_deprecations": {
+      "colunas": {
+        "id": "integer",
+        "branch": "string",
+        "created_at": "datetime",
+        "end_of_support": "date",
+        "updated_at": "datetime",
+        "warning_issued": "integer"
+      },
+      "fks": {}
+    },
+    "software_updates": {
+      "colunas": {
+        "id": "integer",
+        "created_at": "datetime",
+        "end_of_support": "date",
+        "release_notes": "string",
+        "type": "integer",
+        "updated_at": "datetime",
+        "urgent": "boolean",
+        "version": "string"
+      },
+      "fks": {}
+    },
+    "status_edits": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "created_at": "datetime",
+        "media_descriptions": "json",
+        "ordered_media_attachment_ids": "json",
+        "poll_options": "json",
+        "quote_id": "integer",
+        "sensitive": "boolean",
+        "spoiler_text": "string",
+        "status_id": "integer",
+        "text": "string",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "account_id": "accounts"
+      }
+    },
+    "status_pins": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "created_at": "datetime",
+        "status_id": "integer",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "account_id": "accounts"
+      }
+    },
+    "status_stats": {
+      "colunas": {
+        "id": "integer",
+        "created_at": "datetime",
+        "favourites_count": "integer",
+        "quotes_count": "integer",
+        "reblogs_count": "integer",
+        "replies_count": "integer",
+        "status_id": "integer",
+        "untrusted_favourites_count": "integer",
+        "untrusted_reblogs_count": "integer",
+        "updated_at": "datetime"
+      },
+      "fks": {}
+    },
+    "status_trends": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "allowed": "boolean",
+        "language": "string",
+        "rank": "integer",
+        "score": "decimal",
+        "status_id": "integer"
+      },
+      "fks": {
+        "account_id": "accounts"
+      }
+    },
+    "statuses": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "application_id": "integer",
+        "conversation_id": "integer",
+        "created_at": "datetime",
+        "deleted_at": "datetime",
+        "edited_at": "datetime",
+        "fetched_replies_at": "datetime",
+        "in_reply_to_account_id": "integer",
+        "in_reply_to_id": "integer",
+        "language": "string",
+        "local": "boolean",
+        "ordered_media_attachment_ids": "json",
+        "poll_id": "integer",
+        "quote_approval_policy": "integer",
+        "reblog_of_id": "integer",
+        "reply": "boolean",
+        "sensitive": "boolean",
+        "spoiler_text": "string",
+        "text": "string",
+        "trendable": "boolean",
+        "updated_at": "datetime",
+        "uri": "string",
+        "url": "string",
+        "visibility": "integer"
+      },
+      "fks": {
+        "in_reply_to_account_id": "accounts",
+        "account_id": "accounts",
+        "in_reply_to_id": "statuses",
+        "reblog_of_id": "statuses"
+      }
+    },
+    "statuses_tags": {
+      "colunas": {
+        "id": "integer",
+        "status_id": "integer",
+        "tag_id": "integer"
+      },
+      "fks": {
+        "tag_id": "tags"
+      }
+    },
+    "tag_follows": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "created_at": "datetime",
+        "tag_id": "integer",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "account_id": "accounts",
+        "tag_id": "tags"
+      }
+    },
+    "tag_trends": {
+      "colunas": {
+        "id": "integer",
+        "allowed": "boolean",
+        "language": "string",
+        "rank": "integer",
+        "score": "decimal",
+        "tag_id": "integer"
+      },
+      "fks": {
+        "tag_id": "tags"
+      }
+    },
+    "tagged_objects": {
+      "colunas": {
+        "id": "integer",
+        "ap_type": "string",
+        "created_at": "datetime",
+        "object_id": "integer",
+        "object_type": "string",
+        "status_id": "integer",
+        "updated_at": "datetime",
+        "uri": "string"
+      },
+      "fks": {}
+    },
+    "tags": {
+      "colunas": {
+        "id": "integer",
+        "created_at": "datetime",
+        "display_name": "string",
+        "last_status_at": "datetime",
+        "listable": "boolean",
+        "max_score": "decimal",
+        "max_score_at": "datetime",
+        "name": "string",
+        "requested_review_at": "datetime",
+        "reviewed_at": "datetime",
+        "trendable": "boolean",
+        "updated_at": "datetime",
+        "usable": "boolean"
+      },
+      "fks": {}
+    },
+    "terms_of_services": {
+      "colunas": {
+        "id": "integer",
+        "changelog": "string",
+        "created_at": "datetime",
+        "effective_date": "date",
+        "notification_sent_at": "datetime",
+        "published_at": "datetime",
+        "text": "string",
+        "updated_at": "datetime"
+      },
+      "fks": {}
+    },
+    "tombstones": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "by_moderator": "boolean",
+        "created_at": "datetime",
+        "updated_at": "datetime",
+        "uri": "string"
+      },
+      "fks": {
+        "account_id": "accounts"
+      }
+    },
+    "unavailable_domains": {
+      "colunas": {
+        "id": "integer",
+        "created_at": "datetime",
+        "domain": "string",
+        "updated_at": "datetime"
+      },
+      "fks": {}
+    },
+    "user_invite_requests": {
+      "colunas": {
+        "id": "integer",
+        "created_at": "datetime",
+        "text": "string",
+        "updated_at": "datetime",
+        "user_id": "integer"
+      },
+      "fks": {
+        "user_id": "users"
+      }
+    },
+    "user_roles": {
+      "colunas": {
+        "id": "integer",
+        "collection_limit": "integer",
+        "color": "string",
+        "created_at": "datetime",
+        "highlighted": "boolean",
+        "name": "string",
+        "permissions": "integer",
+        "position": "integer",
+        "require_2fa": "boolean",
+        "updated_at": "datetime"
+      },
+      "fks": {}
+    },
+    "username_blocks": {
+      "colunas": {
+        "id": "integer",
+        "allow_with_approval": "boolean",
+        "created_at": "datetime",
+        "exact": "boolean",
+        "normalized_username": "string",
+        "updated_at": "datetime",
+        "username": "string"
+      },
+      "fks": {}
+    },
+    "users": {
+      "colunas": {
+        "id": "integer",
+        "account_id": "integer",
+        "age_verified_at": "datetime",
+        "approved": "boolean",
+        "chosen_languages": "json",
+        "confirmation_sent_at": "datetime",
+        "confirmation_token": "string",
+        "confirmed_at": "datetime",
+        "consumed_timestep": "integer",
+        "created_at": "datetime",
+        "created_by_application_id": "integer",
+        "current_sign_in_at": "datetime",
+        "disabled": "boolean",
+        "email": "string",
+        "encrypted_password": "string",
+        "invite_id": "integer",
+        "last_emailed_at": "datetime",
+        "last_sign_in_at": "datetime",
+        "locale": "string",
+        "otp_backup_codes": "json",
+        "otp_required_for_login": "boolean",
+        "otp_secret": "string",
+        "require_tos_interstitial": "boolean",
+        "reset_password_sent_at": "datetime",
+        "reset_password_token": "string",
+        "role_id": "integer",
+        "settings": "string",
+        "sign_in_count": "integer",
+        "sign_in_token": "string",
+        "sign_in_token_sent_at": "datetime",
+        "sign_up_ip": "string",
+        "skip_sign_in_token": "boolean",
+        "time_zone": "string",
+        "unconfirmed_email": "string",
+        "updated_at": "datetime",
+        "webauthn_id": "string"
+      },
+      "fks": {
+        "account_id": "accounts",
+        "invite_id": "invites",
+        "created_by_application_id": "oauth_applications",
+        "role_id": "user_roles"
+      }
+    },
+    "web_push_subscriptions": {
+      "colunas": {
+        "id": "integer",
+        "access_token_id": "integer",
+        "created_at": "datetime",
+        "data": "json",
+        "endpoint": "string",
+        "key_auth": "string",
+        "key_p256dh": "string",
+        "standard": "boolean",
+        "updated_at": "datetime",
+        "user_id": "integer"
+      },
+      "fks": {
+        "access_token_id": "oauth_access_tokens",
+        "user_id": "users"
+      }
+    },
+    "web_settings": {
+      "colunas": {
+        "id": "integer",
+        "created_at": "datetime",
+        "data": "json",
+        "updated_at": "datetime",
+        "user_id": "integer"
+      },
+      "fks": {
+        "user_id": "users"
+      }
+    },
+    "webauthn_credentials": {
+      "colunas": {
+        "id": "integer",
+        "created_at": "datetime",
+        "external_id": "string",
+        "nickname": "string",
+        "public_key": "string",
+        "sign_count": "integer",
+        "updated_at": "datetime",
+        "user_id": "integer"
+      },
+      "fks": {
+        "user_id": "users"
+      }
+    },
+    "webhooks": {
+      "colunas": {
+        "id": "integer",
+        "created_at": "datetime",
+        "enabled": "boolean",
+        "events": "json",
+        "secret": "string",
+        "template": "string",
+        "updated_at": "datetime",
+        "url": "string"
+      },
+      "fks": {}
+    }
+  },
+  "escopo": "escala"
+}

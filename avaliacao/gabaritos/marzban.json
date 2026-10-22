@@ -1,0 +1,241 @@
+{
+  "projeto": "marzban",
+  "externo": true,
+  "origem": "https://github.com/Gozargah/Marzban",
+  "fonte_da_verdade": "o Base.metadata que o SQLAlchemy monta ao importar app/db/models.py",
+  "confianca": "alta",
+  "notas": [
+    "Os modelos são SQLAlchemy declarativos.",
+    "As 62 migrations Alembic são código Python, que nem o parser nem o sqlglot leem."
+  ],
+  "tabelas": {
+    "admins": {
+      "colunas": {
+        "id": "integer",
+        "username": "string",
+        "hashed_password": "string",
+        "created_at": "datetime",
+        "is_sudo": "boolean",
+        "password_reset_at": "datetime",
+        "telegram_id": "string",
+        "discord_webhook": "string",
+        "users_usage": "string"
+      },
+      "fks": {}
+    },
+    "admin_usage_logs": {
+      "colunas": {
+        "id": "integer",
+        "admin_id": "integer",
+        "used_traffic_at_reset": "string",
+        "reset_at": "datetime"
+      },
+      "fks": {
+        "admin_id": "admins"
+      }
+    },
+    "users": {
+      "colunas": {
+        "id": "integer",
+        "username": "string",
+        "status": "string",
+        "used_traffic": "string",
+        "data_limit": "string",
+        "data_limit_reset_strategy": "string",
+        "expire": "integer",
+        "admin_id": "integer",
+        "sub_revoked_at": "datetime",
+        "sub_updated_at": "datetime",
+        "sub_last_user_agent": "string",
+        "created_at": "datetime",
+        "note": "string",
+        "online_at": "datetime",
+        "on_hold_expire_duration": "string",
+        "on_hold_timeout": "datetime",
+        "auto_delete_in_days": "integer",
+        "edit_at": "datetime",
+        "last_status_change": "datetime"
+      },
+      "fks": {
+        "admin_id": "admins"
+      }
+    },
+    "exclude_inbounds_association": {
+      "colunas": {
+        "proxy_id": "integer",
+        "inbound_tag": "string"
+      },
+      "fks": {
+        "proxy_id": "proxies",
+        "inbound_tag": "inbounds"
+      }
+    },
+    "template_inbounds_association": {
+      "colunas": {
+        "user_template_id": "integer",
+        "inbound_tag": "string"
+      },
+      "fks": {
+        "user_template_id": "user_templates",
+        "inbound_tag": "inbounds"
+      }
+    },
+    "next_plans": {
+      "colunas": {
+        "id": "integer",
+        "user_id": "integer",
+        "data_limit": "string",
+        "expire": "integer",
+        "add_remaining_traffic": "boolean",
+        "fire_on_either": "boolean"
+      },
+      "fks": {
+        "user_id": "users"
+      }
+    },
+    "user_templates": {
+      "colunas": {
+        "id": "integer",
+        "name": "string",
+        "data_limit": "string",
+        "expire_duration": "string",
+        "username_prefix": "string",
+        "username_suffix": "string"
+      },
+      "fks": {}
+    },
+    "user_usage_logs": {
+      "colunas": {
+        "id": "integer",
+        "user_id": "integer",
+        "used_traffic_at_reset": "string",
+        "reset_at": "datetime"
+      },
+      "fks": {
+        "user_id": "users"
+      }
+    },
+    "proxies": {
+      "colunas": {
+        "id": "integer",
+        "user_id": "integer",
+        "type": "string",
+        "settings": "json"
+      },
+      "fks": {
+        "user_id": "users"
+      }
+    },
+    "inbounds": {
+      "colunas": {
+        "id": "integer",
+        "tag": "string"
+      },
+      "fks": {}
+    },
+    "hosts": {
+      "colunas": {
+        "id": "integer",
+        "remark": "string",
+        "address": "string",
+        "port": "integer",
+        "path": "string",
+        "sni": "string",
+        "host": "string",
+        "security": "string",
+        "alpn": "string",
+        "fingerprint": "string",
+        "inbound_tag": "string",
+        "allowinsecure": "boolean",
+        "is_disabled": "boolean",
+        "mux_enable": "boolean",
+        "fragment_setting": "string",
+        "noise_setting": "string",
+        "random_user_agent": "boolean",
+        "use_sni_as_host": "boolean"
+      },
+      "fks": {
+        "inbound_tag": "inbounds"
+      }
+    },
+    "system": {
+      "colunas": {
+        "id": "integer",
+        "uplink": "string",
+        "downlink": "string"
+      },
+      "fks": {}
+    },
+    "jwt": {
+      "colunas": {
+        "id": "integer",
+        "secret_key": "string"
+      },
+      "fks": {}
+    },
+    "tls": {
+      "colunas": {
+        "id": "integer",
+        "key": "string",
+        "certificate": "string"
+      },
+      "fks": {}
+    },
+    "nodes": {
+      "colunas": {
+        "id": "integer",
+        "name": "string",
+        "address": "string",
+        "port": "integer",
+        "api_port": "integer",
+        "xray_version": "string",
+        "status": "string",
+        "last_status_change": "datetime",
+        "message": "string",
+        "created_at": "datetime",
+        "uplink": "string",
+        "downlink": "string",
+        "usage_coefficient": "decimal"
+      },
+      "fks": {}
+    },
+    "node_user_usages": {
+      "colunas": {
+        "id": "integer",
+        "created_at": "datetime",
+        "user_id": "integer",
+        "node_id": "integer",
+        "used_traffic": "string"
+      },
+      "fks": {
+        "user_id": "users",
+        "node_id": "nodes"
+      }
+    },
+    "node_usages": {
+      "colunas": {
+        "id": "integer",
+        "created_at": "datetime",
+        "node_id": "integer",
+        "uplink": "string",
+        "downlink": "string"
+      },
+      "fks": {
+        "node_id": "nodes"
+      }
+    },
+    "notification_reminders": {
+      "colunas": {
+        "id": "integer",
+        "user_id": "integer",
+        "type": "string",
+        "threshold": "integer",
+        "expires_at": "datetime",
+        "created_at": "datetime"
+      },
+      "fks": {
+        "user_id": "users"
+      }
+    }
+  }
+}

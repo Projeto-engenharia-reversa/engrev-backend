@@ -1,0 +1,505 @@
+{
+  "projeto": "grocy",
+  "externo": true,
+  "origem": "https://github.com/grocy/grocy",
+  "fonte_da_verdade": "o schema que as 248 migrations do próprio projeto produzem, lido por PRAGMA table_info",
+  "confianca": "alta",
+  "fks_avaliaveis": false,
+  "notas": [
+    "As chaves estrangeiras não são avaliáveis: o projeto não declara nenhuma constraint FOREIGN KEY, usa trigger.",
+    "Views e triggers ficam fora. As tabelas cache__* entram, são tabelas de verdade no schema."
+  ],
+  "arquivos_de_schema": [
+    "migrations/"
+  ],
+  "tabelas": {
+    "api_keys": {
+      "colunas": {
+        "id": "integer",
+        "api_key": "string",
+        "user_id": "integer",
+        "expires": "datetime",
+        "last_used": "datetime",
+        "row_created_timestamp": "datetime",
+        "key_type": "string",
+        "description": "string"
+      },
+      "fks": {}
+    },
+    "batteries": {
+      "colunas": {
+        "id": "integer",
+        "name": "string",
+        "description": "string",
+        "used_in": "string",
+        "charge_interval_days": "integer",
+        "row_created_timestamp": "datetime",
+        "active": "integer"
+      },
+      "fks": {}
+    },
+    "battery_charge_cycles": {
+      "colunas": {
+        "id": "integer",
+        "battery_id": "integer",
+        "tracked_time": "datetime",
+        "undone": "integer",
+        "undone_timestamp": "datetime",
+        "row_created_timestamp": "datetime"
+      },
+      "fks": {}
+    },
+    "cache__products_average_price": {
+      "colunas": {
+        "id": "integer",
+        "product_id": "integer",
+        "price": "decimal"
+      },
+      "fks": {}
+    },
+    "cache__products_last_purchased": {
+      "colunas": {
+        "id": "integer",
+        "product_id": "integer",
+        "amount": "decimal",
+        "best_before_date": "date",
+        "purchased_date": "date",
+        "price": "decimal",
+        "location_id": "integer",
+        "shopping_location_id": "integer"
+      },
+      "fks": {}
+    },
+    "cache__quantity_unit_conversions_resolved": {
+      "colunas": {
+        "id": "integer",
+        "product_id": "integer",
+        "from_qu_id": "integer",
+        "from_qu_name": "string",
+        "from_qu_name_plural": "string",
+        "to_qu_id": "integer",
+        "to_qu_name": "string",
+        "to_qu_name_plural": "string",
+        "factor": "string",
+        "path": "string"
+      },
+      "fks": {}
+    },
+    "chores": {
+      "colunas": {
+        "id": "integer",
+        "name": "string",
+        "description": "string",
+        "period_type": "string",
+        "period_days": "integer",
+        "row_created_timestamp": "datetime",
+        "period_config": "string",
+        "track_date_only": "integer",
+        "rollover": "integer",
+        "assignment_type": "string",
+        "assignment_config": "string",
+        "next_execution_assigned_to_user_id": "integer",
+        "consume_product_on_execution": "integer",
+        "product_id": "integer",
+        "product_amount": "decimal",
+        "period_interval": "integer",
+        "active": "integer",
+        "start_date": "datetime",
+        "rescheduled_date": "datetime",
+        "rescheduled_next_execution_assigned_to_user_id": "integer"
+      },
+      "fks": {}
+    },
+    "chores_log": {
+      "colunas": {
+        "id": "integer",
+        "chore_id": "integer",
+        "tracked_time": "datetime",
+        "done_by_user_id": "integer",
+        "row_created_timestamp": "datetime",
+        "undone": "integer",
+        "undone_timestamp": "datetime",
+        "skipped": "integer",
+        "scheduled_execution_time": "datetime"
+      },
+      "fks": {}
+    },
+    "equipment": {
+      "colunas": {
+        "id": "integer",
+        "name": "string",
+        "description": "string",
+        "instruction_manual_file_name": "string",
+        "row_created_timestamp": "datetime"
+      },
+      "fks": {}
+    },
+    "locations": {
+      "colunas": {
+        "id": "integer",
+        "name": "string",
+        "description": "string",
+        "row_created_timestamp": "datetime",
+        "is_freezer": "integer",
+        "active": "integer"
+      },
+      "fks": {}
+    },
+    "meal_plan": {
+      "colunas": {
+        "id": "integer",
+        "day": "date",
+        "type": "string",
+        "recipe_id": "integer",
+        "recipe_servings": "integer",
+        "note": "string",
+        "product_id": "integer",
+        "product_amount": "decimal",
+        "product_qu_id": "integer",
+        "row_created_timestamp": "datetime",
+        "done": "integer",
+        "section_id": "integer"
+      },
+      "fks": {}
+    },
+    "meal_plan_sections": {
+      "colunas": {
+        "id": "integer",
+        "name": "string",
+        "sort_number": "integer",
+        "row_created_timestamp": "datetime",
+        "time_info": "string"
+      },
+      "fks": {}
+    },
+    "permission_hierarchy": {
+      "colunas": {
+        "id": "integer",
+        "name": "string",
+        "parent": "integer"
+      },
+      "fks": {}
+    },
+    "product_barcodes": {
+      "colunas": {
+        "id": "integer",
+        "product_id": "integer",
+        "barcode": "string",
+        "qu_id": "integer",
+        "amount": "decimal",
+        "shopping_location_id": "integer",
+        "last_price": "decimal",
+        "row_created_timestamp": "datetime",
+        "note": "string"
+      },
+      "fks": {}
+    },
+    "product_groups": {
+      "colunas": {
+        "id": "integer",
+        "name": "string",
+        "description": "string",
+        "row_created_timestamp": "datetime",
+        "active": "integer"
+      },
+      "fks": {}
+    },
+    "products": {
+      "colunas": {
+        "id": "integer",
+        "name": "string",
+        "description": "string",
+        "product_group_id": "integer",
+        "active": "integer",
+        "location_id": "integer",
+        "shopping_location_id": "integer",
+        "qu_id_purchase": "integer",
+        "qu_id_stock": "integer",
+        "min_stock_amount": "integer",
+        "default_best_before_days": "integer",
+        "default_best_before_days_after_open": "integer",
+        "default_best_before_days_after_freezing": "integer",
+        "default_best_before_days_after_thawing": "integer",
+        "picture_file_name": "string",
+        "enable_tare_weight_handling": "integer",
+        "tare_weight": "decimal",
+        "not_check_stock_fulfillment_for_recipes": "integer",
+        "parent_product_id": "integer",
+        "calories": "integer",
+        "cumulate_min_stock_amount_of_sub_products": "integer",
+        "due_type": "integer",
+        "quick_consume_amount": "decimal",
+        "hide_on_stock_overview": "integer",
+        "default_stock_label_type": "integer",
+        "should_not_be_frozen": "integer",
+        "treat_opened_as_out_of_stock": "integer",
+        "no_own_stock": "integer",
+        "default_consume_location_id": "integer",
+        "move_on_open": "integer",
+        "row_created_timestamp": "datetime",
+        "qu_id_consume": "integer",
+        "auto_reprint_stock_label": "integer",
+        "quick_open_amount": "decimal",
+        "qu_id_price": "integer",
+        "disable_open": "integer",
+        "default_purchase_price_type": "integer"
+      },
+      "fks": {}
+    },
+    "quantity_unit_conversions": {
+      "colunas": {
+        "id": "integer",
+        "from_qu_id": "integer",
+        "to_qu_id": "integer",
+        "factor": "decimal",
+        "product_id": "integer",
+        "row_created_timestamp": "datetime"
+      },
+      "fks": {}
+    },
+    "quantity_units": {
+      "colunas": {
+        "id": "integer",
+        "name": "string",
+        "description": "string",
+        "row_created_timestamp": "datetime",
+        "name_plural": "string",
+        "plural_forms": "string",
+        "active": "integer"
+      },
+      "fks": {}
+    },
+    "recipes": {
+      "colunas": {
+        "id": "integer",
+        "name": "string",
+        "description": "string",
+        "row_created_timestamp": "datetime",
+        "picture_file_name": "string",
+        "base_servings": "integer",
+        "desired_servings": "integer",
+        "not_check_shoppinglist": "integer",
+        "type": "string",
+        "product_id": "integer"
+      },
+      "fks": {}
+    },
+    "recipes_nestings": {
+      "colunas": {
+        "id": "integer",
+        "recipe_id": "integer",
+        "includes_recipe_id": "integer",
+        "row_created_timestamp": "datetime",
+        "servings": "integer"
+      },
+      "fks": {}
+    },
+    "recipes_pos": {
+      "colunas": {
+        "id": "integer",
+        "recipe_id": "integer",
+        "product_id": "integer",
+        "amount": "decimal",
+        "note": "string",
+        "qu_id": "integer",
+        "only_check_single_unit_in_stock": "integer",
+        "ingredient_group": "string",
+        "not_check_stock_fulfillment": "integer",
+        "row_created_timestamp": "datetime",
+        "variable_amount": "string",
+        "price_factor": "decimal",
+        "round_up": "integer"
+      },
+      "fks": {}
+    },
+    "sessions": {
+      "colunas": {
+        "id": "integer",
+        "session_key": "string",
+        "user_id": "integer",
+        "expires": "datetime",
+        "last_used": "datetime",
+        "row_created_timestamp": "datetime"
+      },
+      "fks": {}
+    },
+    "shopping_list": {
+      "colunas": {
+        "id": "integer",
+        "product_id": "integer",
+        "note": "string",
+        "amount": "decimal",
+        "row_created_timestamp": "datetime",
+        "shopping_list_id": "integer",
+        "done": "integer",
+        "qu_id": "integer"
+      },
+      "fks": {}
+    },
+    "shopping_lists": {
+      "colunas": {
+        "id": "integer",
+        "name": "string",
+        "description": "string",
+        "row_created_timestamp": "datetime"
+      },
+      "fks": {}
+    },
+    "shopping_locations": {
+      "colunas": {
+        "id": "integer",
+        "name": "string",
+        "description": "string",
+        "row_created_timestamp": "datetime",
+        "active": "integer"
+      },
+      "fks": {}
+    },
+    "stock": {
+      "colunas": {
+        "id": "integer",
+        "product_id": "integer",
+        "amount": "decimal",
+        "best_before_date": "date",
+        "purchased_date": "date",
+        "stock_id": "string",
+        "price": "decimal",
+        "open": "integer",
+        "opened_date": "datetime",
+        "row_created_timestamp": "datetime",
+        "location_id": "integer",
+        "shopping_location_id": "integer",
+        "note": "string"
+      },
+      "fks": {}
+    },
+    "stock_log": {
+      "colunas": {
+        "id": "integer",
+        "product_id": "integer",
+        "amount": "decimal",
+        "best_before_date": "date",
+        "purchased_date": "date",
+        "used_date": "date",
+        "spoiled": "integer",
+        "stock_id": "string",
+        "transaction_type": "string",
+        "price": "decimal",
+        "undone": "integer",
+        "undone_timestamp": "datetime",
+        "opened_date": "datetime",
+        "location_id": "integer",
+        "recipe_id": "integer",
+        "correlation_id": "string",
+        "transaction_id": "string",
+        "stock_row_id": "integer",
+        "shopping_location_id": "integer",
+        "user_id": "integer",
+        "row_created_timestamp": "datetime",
+        "note": "string"
+      },
+      "fks": {}
+    },
+    "task_categories": {
+      "colunas": {
+        "id": "integer",
+        "name": "string",
+        "description": "string",
+        "row_created_timestamp": "datetime",
+        "active": "integer"
+      },
+      "fks": {}
+    },
+    "tasks": {
+      "colunas": {
+        "id": "integer",
+        "name": "string",
+        "description": "string",
+        "due_date": "datetime",
+        "done": "integer",
+        "done_timestamp": "datetime",
+        "category_id": "integer",
+        "assigned_to_user_id": "integer",
+        "row_created_timestamp": "datetime"
+      },
+      "fks": {}
+    },
+    "user_permissions": {
+      "colunas": {
+        "id": "integer",
+        "permission_id": "integer",
+        "user_id": "integer"
+      },
+      "fks": {}
+    },
+    "user_settings": {
+      "colunas": {
+        "id": "integer",
+        "user_id": "integer",
+        "key": "string",
+        "value": "string",
+        "row_created_timestamp": "datetime",
+        "row_updated_timestamp": "datetime"
+      },
+      "fks": {}
+    },
+    "userentities": {
+      "colunas": {
+        "id": "integer",
+        "name": "string",
+        "caption": "string",
+        "description": "string",
+        "show_in_sidebar_menu": "integer",
+        "icon_css_class": "string",
+        "row_created_timestamp": "datetime"
+      },
+      "fks": {}
+    },
+    "userfield_values": {
+      "colunas": {
+        "id": "integer",
+        "field_id": "integer",
+        "object_id": "string",
+        "value": "string",
+        "row_created_timestamp": "datetime"
+      },
+      "fks": {}
+    },
+    "userfields": {
+      "colunas": {
+        "id": "integer",
+        "entity": "string",
+        "name": "string",
+        "caption": "string",
+        "type": "string",
+        "show_as_column_in_tables": "integer",
+        "row_created_timestamp": "datetime",
+        "config": "string",
+        "sort_number": "integer",
+        "input_required": "integer",
+        "default_value": "string"
+      },
+      "fks": {}
+    },
+    "userobjects": {
+      "colunas": {
+        "id": "integer",
+        "userentity_id": "integer",
+        "row_created_timestamp": "datetime"
+      },
+      "fks": {}
+    },
+    "users": {
+      "colunas": {
+        "id": "integer",
+        "username": "string",
+        "first_name": "string",
+        "last_name": "string",
+        "password": "string",
+        "row_created_timestamp": "datetime",
+        "picture_file_name": "string"
+      },
+      "fks": {}
+    }
+  }
+}

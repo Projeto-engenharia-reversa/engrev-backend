@@ -1,0 +1,49 @@
+# Schema do BFF que serve o player web.
+# Faixa e Playlist só existem aqui; Album vem do serviço de catálogo (proto/).
+
+type Faixa {
+  id: ID!
+  titulo: String!
+  duracaoSegundos: Int!
+  numeroFaixa: Int!
+  explicita: Boolean!
+  isrc: String
+  album: Album!
+  compositor: String
+}
+
+type Album {
+  id: ID!
+  titulo: String!
+  faixas: [Faixa!]!
+}
+
+type Playlist {
+  id: ID!
+  nome: String!
+  descricao: String
+  publica: Boolean!
+  criadaEm: String!
+  totalFaixas: Int!
+  dono: Assinante!
+}
+
+type Assinante {
+  id: ID!
+  nomeCompleto: String!
+  playlists: [Playlist!]!
+}
+
+type ItemPlaylist {
+  id: ID!
+  playlist: Playlist!
+  faixa: Faixa!
+  posicao: Int!
+  adicionadaEm: String!
+}
+
+type Query {
+  faixa(id: ID!): Faixa
+  playlist(id: ID!): Playlist
+  buscarFaixas(termo: String!): [Faixa!]!
+}

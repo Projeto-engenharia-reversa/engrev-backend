@@ -1,0 +1,120 @@
+{
+  "projeto": "golang-gin-realworld-example-app",
+  "externo": true,
+  "origem": "https://github.com/gothinkster/golang-gin-realworld-example-app",
+  "fonte_da_verdade": "o schema que o AutoMigrate do próprio projeto cria, lido do sqlite_master",
+  "confianca": "alta",
+  "notas": [
+    "O schema só existe como structs GORM; não há migration nem arquivo SQL.",
+    "Os nomes de tabela são a pluralização do GORM sobre a struct: UserModel vira user_models.",
+    "user_models é a única sem created_at, updated_at e deleted_at, por não embutir gorm.Model."
+  ],
+  "arquivos_de_schema": [
+    "users/models.go",
+    "articles/models.go"
+  ],
+  "tabelas": {
+    "user_models": {
+      "colunas": {
+        "id": "integer",
+        "username": "string",
+        "email": "string",
+        "bio": "string",
+        "image": "string",
+        "password": "string"
+      },
+      "fks": {}
+    },
+    "follow_models": {
+      "colunas": {
+        "id": "integer",
+        "created_at": "datetime",
+        "updated_at": "datetime",
+        "deleted_at": "datetime",
+        "following_id": "integer",
+        "followed_by_id": "integer"
+      },
+      "fks": {
+        "following_id": "user_models",
+        "followed_by_id": "user_models"
+      }
+    },
+    "article_models": {
+      "colunas": {
+        "id": "integer",
+        "created_at": "datetime",
+        "updated_at": "datetime",
+        "deleted_at": "datetime",
+        "slug": "string",
+        "title": "string",
+        "description": "string",
+        "body": "string",
+        "author_id": "integer"
+      },
+      "fks": {
+        "author_id": "article_user_models"
+      }
+    },
+    "article_user_models": {
+      "colunas": {
+        "id": "integer",
+        "created_at": "datetime",
+        "updated_at": "datetime",
+        "deleted_at": "datetime",
+        "user_model_id": "integer"
+      },
+      "fks": {
+        "user_model_id": "user_models"
+      }
+    },
+    "favorite_models": {
+      "colunas": {
+        "id": "integer",
+        "created_at": "datetime",
+        "updated_at": "datetime",
+        "deleted_at": "datetime",
+        "favorite_id": "integer",
+        "favorite_by_id": "integer"
+      },
+      "fks": {
+        "favorite_id": "article_models",
+        "favorite_by_id": "article_user_models"
+      }
+    },
+    "tag_models": {
+      "colunas": {
+        "id": "integer",
+        "created_at": "datetime",
+        "updated_at": "datetime",
+        "deleted_at": "datetime",
+        "tag": "string"
+      },
+      "fks": {}
+    },
+    "comment_models": {
+      "colunas": {
+        "id": "integer",
+        "created_at": "datetime",
+        "updated_at": "datetime",
+        "deleted_at": "datetime",
+        "article_id": "integer",
+        "author_id": "integer",
+        "body": "string"
+      },
+      "fks": {
+        "article_id": "article_models",
+        "author_id": "article_user_models"
+      }
+    },
+    "article_tags": {
+      "colunas": {
+        "tag_model_id": "integer",
+        "article_model_id": "integer"
+      },
+      "fks": {
+        "tag_model_id": "tag_models",
+        "article_model_id": "article_models"
+      }
+    }
+  }
+}

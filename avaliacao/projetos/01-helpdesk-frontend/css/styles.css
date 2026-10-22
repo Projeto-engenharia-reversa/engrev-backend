@@ -1,0 +1,71 @@
+:root {
+  --azul: #1f4e79;
+  --cinza: #f4f6f8;
+  --borda: #d6dce3;
+  --texto: #212b36;
+  --alerta: #b34700;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  color: var(--texto);
+  background: var(--cinza);
+}
+
+.topo {
+  background: var(--azul);
+  color: #fff;
+  padding: 12px 24px;
+}
+
+.topo h1 { margin: 0 0 8px; font-size: 18px; }
+.topo nav a { color: #cfe0f0; margin-right: 16px; text-decoration: none; }
+.topo nav a.ativo { color: #fff; font-weight: 600; }
+
+.conteudo { padding: 24px; max-width: 1100px; }
+
+.linha { display: flex; gap: 16px; flex-wrap: wrap; }
+.campo { display: flex; flex-direction: column; flex: 1; min-width: 200px; margin-bottom: 12px; }
+
+label { font-size: 13px; margin-bottom: 4px; }
+input, select, textarea {
+  padding: 7px 9px;
+  border: 1px solid var(--borda);
+  border-radius: 3px;
+  font-size: 14px;
+}
+
+label.inline, label.lembrar { flex-direction: row; align-items: center; gap: 6px; }
+
+button {
+  background: var(--azul);
+  color: #fff;
+  border: 0;
+  padding: 9px 18px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.botao-secundario { padding: 9px 18px; color: var(--azul); text-decoration: none; }
+.acoes { display: flex; gap: 12px; align-items: center; margin-top: 16px; }
+
+table { width: 100%; border-collapse: collapse; background: #fff; margin-top: 12px; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--borda); font-size: 14px; }
+th { background: #eef2f6; font-size: 12px; text-transform: uppercase; }
+
+.filtros { display: flex; gap: 12px; align-items: flex-end; flex-wrap: wrap; margin-bottom: 8px; }
+.vazio { color: #6b7683; font-style: italic; }
+
+.indicadores { display: flex; gap: 16px; flex-wrap: wrap; margin: 16px 0 24px; }
+.cartao { background: #fff; border: 1px solid var(--borda); padding: 14px 18px; border-radius: 4px; min-width: 180px; }
+.cartao .rotulo { display: block; font-size: 12px; color: #6b7683; }
+.cartao strong { font-size: 24px; }
+
+.tela-login { display: flex; align-items: center; justify-content: center; height: 100vh; }
+.caixa-login { background: #fff; padding: 32px; border-radius: 6px; width: 340px; border: 1px solid var(--borda); }
+.caixa-login form { display: flex; flex-direction: column; gap: 6px; }
+.subtitulo { color: #6b7683; font-size: 13px; margin-top: -8px; }
+.rodape-login { font-size: 12px; color: #6b7683; margin-bottom: 0; }

@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+package catalogo.v1;
+
+// Contrato do serviço de catálogo, consumido pelo app e pelo player.
+// Artista e Album também aparecem em openapi/api.yaml, que é o contrato da API
+// pública -- as duas descrições precisam continuar batendo.
+
+message Artista {
+  int64  id = 1;
+  string nome = 2;
+  string nome_artistico = 3;
+  string pais_origem = 4;
+  int32  ano_estreia = 5;
+  string biografia = 6;
+  bool   verificado = 7;
+}
+
+message Album {
+  int64  id = 1;
+  int64  artista_id = 2;
+  string titulo = 3;
+  string tipo = 4;
+  string data_lancamento = 5;
+  int32  total_faixas = 6;
+  string gravadora = 7;
+  string capa_url = 8;
+}
+
+message Genero {
+  int64  id = 1;
+  string nome = 2;
+  string slug = 3;
+  int64  genero_pai_id = 4;
+}
+
+service CatalogoService {
+  rpc ObterArtista(ObterArtistaRequest) returns (Artista);
+  rpc ListarAlbuns(ListarAlbunsRequest) returns (ListarAlbunsResponse);
+}
+
+message ObterArtistaRequest {
+  int64 id = 1;
+}
+
+message ListarAlbunsRequest {
+  int64 artista_id = 1;
+  int32 pagina = 2;
+}
+
+message ListarAlbunsResponse {
+  repeated Album albuns = 1;
+  int32 total = 2;
+}

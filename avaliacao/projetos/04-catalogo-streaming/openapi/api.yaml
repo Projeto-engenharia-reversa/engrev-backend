@@ -1,0 +1,68 @@
+openapi: 3.0.3
+info:
+  title: API Publica do Catalogo
+  description: >
+    Contrato exposto a parceiros. Artista e Album repetem o que esta em
+    proto/catalogo.proto de proposito -- este e o contrato externo e o proto e o
+    interno; qualquer divergencia entre os dois e bug.
+  version: "2.3.0"
+
+servers:
+  - url: https://api.streaming.example.com/v2
+
+paths:
+  /artistas/{id}:
+    get:
+      summary: Detalhe de um artista
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: {type: integer}
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Artista"
+  /albuns:
+    get:
+      summary: Lista albuns
+      responses:
+        "200":
+          description: OK
+
+components:
+  schemas:
+    Artista:
+      type: object
+      required: [id, nome]
+      properties:
+        id: {type: integer}
+        nome: {type: string}
+        nome_artistico: {type: string}
+        pais_origem: {type: string}
+        ano_estreia: {type: integer}
+        verificado: {type: boolean}
+
+    Album:
+      type: object
+      required: [id, titulo, artista_id]
+      properties:
+        id: {type: integer}
+        artista_id: {type: integer}
+        titulo: {type: string}
+        tipo: {type: string}
+        data_lancamento: {type: string, format: date}
+        total_faixas: {type: integer}
+        gravadora: {type: string}
+
+    Selo:
+      type: object
+      properties:
+        id: {type: integer}
+        nome: {type: string}
+        pais: {type: string}
+        fundado_em: {type: integer}
+        ativo: {type: boolean}

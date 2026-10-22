@@ -1,0 +1,96 @@
+{
+  "projeto": "aspnetcore-realworld-example-app",
+  "externo": true,
+  "origem": "https://github.com/gothinkster/aspnetcore-realworld-example-app",
+  "fonte_da_verdade": "src/Conduit/Infrastructure/ConduitContext.cs e src/Conduit/Domain/*.cs",
+  "arquivos_de_schema": [
+    "Conduit/Domain/",
+    "ConduitContext.cs"
+  ],
+  "nota_sem_schema": "Sai tudo que declara coluna e tipo, as 7 classes de Conduit/Domain/ e o ConduitContext.cs. Sobram as classes de Features/, com nome de campo sem tipo.",
+  "confianca": "alta",
+  "notas": [
+    "As 7 tabelas são os 7 DbSet<> do contexto; classe que não é DbSet não é tabela.",
+    "Chave composta em article_tags, article_favorites e followed_people. tags.tag_id é texto."
+  ],
+  "tabelas": {
+    "articles": {
+      "colunas": {
+        "article_id": "integer",
+        "slug": "string",
+        "title": "string",
+        "description": "string",
+        "body": "string",
+        "author_id": "integer",
+        "created_at": "datetime",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "author_id": "persons"
+      }
+    },
+    "comments": {
+      "colunas": {
+        "comment_id": "integer",
+        "body": "string",
+        "author_id": "integer",
+        "article_id": "integer",
+        "created_at": "datetime",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "author_id": "persons",
+        "article_id": "articles"
+      }
+    },
+    "persons": {
+      "colunas": {
+        "person_id": "integer",
+        "username": "string",
+        "email": "string",
+        "bio": "string",
+        "image": "string",
+        "is_followed_by_current_user": "boolean",
+        "hash": "string",
+        "salt": "string"
+      },
+      "fks": {}
+    },
+    "tags": {
+      "colunas": {
+        "tag_id": "string"
+      },
+      "fks": {}
+    },
+    "article_tags": {
+      "colunas": {
+        "article_id": "integer",
+        "tag_id": "string"
+      },
+      "fks": {
+        "article_id": "articles",
+        "tag_id": "tags"
+      }
+    },
+    "article_favorites": {
+      "colunas": {
+        "article_id": "integer",
+        "person_id": "integer"
+      },
+      "fks": {
+        "article_id": "articles",
+        "person_id": "persons"
+      }
+    },
+    "followed_people": {
+      "colunas": {
+        "observer_id": "integer",
+        "target_id": "integer"
+      },
+      "fks": {
+        "observer_id": "persons",
+        "target_id": "persons"
+      }
+    }
+  }
+}

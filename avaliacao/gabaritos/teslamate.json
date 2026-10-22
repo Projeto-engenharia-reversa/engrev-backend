@@ -1,0 +1,317 @@
+{
+  "projeto": "teslamate",
+  "externo": true,
+  "origem": "https://github.com/teslamate-org/teslamate",
+  "fonte_da_verdade": "o schema que as 105 migrations Ecto do próprio projeto produzem, lido do catálogo do PostgreSQL",
+  "confianca": "alta",
+  "notas": [
+    "As 105 migrations são .exs, código Elixir, que nem o parser nem o sqlglot leem.",
+    "A tabela tokens vive no schema private, não em public."
+  ],
+  "tabelas": {
+    "addresses": {
+      "colunas": {
+        "id": "integer",
+        "display_name": "string",
+        "latitude": "decimal",
+        "longitude": "decimal",
+        "name": "string",
+        "house_number": "string",
+        "road": "string",
+        "neighbourhood": "string",
+        "city": "string",
+        "county": "string",
+        "postcode": "string",
+        "state": "string",
+        "state_district": "string",
+        "country": "string",
+        "raw": "json",
+        "inserted_at": "string",
+        "updated_at": "string",
+        "osm_id": "integer",
+        "osm_type": "string"
+      },
+      "fks": {}
+    },
+    "car_settings": {
+      "colunas": {
+        "id": "integer",
+        "suspend_min": "integer",
+        "suspend_after_idle_min": "integer",
+        "req_not_unlocked": "boolean",
+        "free_supercharging": "boolean",
+        "use_streaming_api": "boolean",
+        "enabled": "boolean",
+        "lfp_battery": "boolean"
+      },
+      "fks": {}
+    },
+    "cars": {
+      "colunas": {
+        "id": "integer",
+        "eid": "integer",
+        "vid": "integer",
+        "model": "string",
+        "efficiency": "decimal",
+        "inserted_at": "string",
+        "updated_at": "string",
+        "vin": "string",
+        "name": "string",
+        "trim_badging": "string",
+        "settings_id": "integer",
+        "exterior_color": "string",
+        "spoiler_type": "string",
+        "wheel_type": "string",
+        "display_priority": "integer",
+        "marketing_name": "string"
+      },
+      "fks": {
+        "settings_id": "car_settings"
+      }
+    },
+    "charges": {
+      "colunas": {
+        "id": "integer",
+        "date": "datetime",
+        "battery_heater_on": "boolean",
+        "battery_level": "integer",
+        "charge_energy_added": "decimal",
+        "charger_actual_current": "integer",
+        "charger_phases": "integer",
+        "charger_pilot_current": "integer",
+        "charger_power": "integer",
+        "charger_voltage": "integer",
+        "fast_charger_present": "boolean",
+        "conn_charge_cable": "string",
+        "fast_charger_brand": "string",
+        "fast_charger_type": "string",
+        "ideal_battery_range_km": "decimal",
+        "not_enough_power_to_heat": "boolean",
+        "outside_temp": "decimal",
+        "charging_process_id": "integer",
+        "battery_heater": "boolean",
+        "battery_heater_no_power": "boolean",
+        "rated_battery_range_km": "decimal",
+        "usable_battery_level": "integer"
+      },
+      "fks": {
+        "charging_process_id": "charging_processes"
+      }
+    },
+    "charging_processes": {
+      "colunas": {
+        "id": "integer",
+        "start_date": "datetime",
+        "end_date": "datetime",
+        "charge_energy_added": "decimal",
+        "start_ideal_range_km": "decimal",
+        "end_ideal_range_km": "decimal",
+        "start_battery_level": "integer",
+        "end_battery_level": "integer",
+        "duration_min": "integer",
+        "outside_temp_avg": "decimal",
+        "car_id": "integer",
+        "position_id": "integer",
+        "address_id": "integer",
+        "start_rated_range_km": "decimal",
+        "end_rated_range_km": "decimal",
+        "geofence_id": "integer",
+        "charge_energy_used": "decimal",
+        "cost": "decimal"
+      },
+      "fks": {
+        "car_id": "cars",
+        "address_id": "addresses",
+        "geofence_id": "geofences",
+        "position_id": "positions"
+      }
+    },
+    "drives": {
+      "colunas": {
+        "id": "integer",
+        "start_date": "datetime",
+        "end_date": "datetime",
+        "outside_temp_avg": "decimal",
+        "speed_max": "integer",
+        "power_max": "integer",
+        "power_min": "integer",
+        "start_ideal_range_km": "decimal",
+        "end_ideal_range_km": "decimal",
+        "start_km": "decimal",
+        "end_km": "decimal",
+        "distance": "decimal",
+        "duration_min": "integer",
+        "car_id": "integer",
+        "inside_temp_avg": "decimal",
+        "start_address_id": "integer",
+        "end_address_id": "integer",
+        "start_rated_range_km": "decimal",
+        "end_rated_range_km": "decimal",
+        "start_position_id": "integer",
+        "end_position_id": "integer",
+        "start_geofence_id": "integer",
+        "end_geofence_id": "integer",
+        "ascent": "integer",
+        "descent": "integer"
+      },
+      "fks": {
+        "car_id": "cars",
+        "start_address_id": "addresses",
+        "end_address_id": "addresses",
+        "start_geofence_id": "geofences",
+        "end_geofence_id": "geofences",
+        "start_position_id": "positions",
+        "end_position_id": "positions"
+      }
+    },
+    "geofences": {
+      "colunas": {
+        "id": "integer",
+        "name": "string",
+        "latitude": "decimal",
+        "longitude": "decimal",
+        "radius": "integer",
+        "inserted_at": "string",
+        "updated_at": "string",
+        "cost_per_unit": "decimal",
+        "session_fee": "decimal",
+        "billing_type": "string"
+      },
+      "fks": {}
+    },
+    "import_file_checkpoints": {
+      "colunas": {
+        "id": "integer",
+        "run_id": "integer",
+        "file_name": "string",
+        "file_fingerprint": "string",
+        "completed_at": "datetime",
+        "inserted_at": "datetime",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "run_id": "import_runs"
+      }
+    },
+    "import_rejections": {
+      "colunas": {
+        "id": "integer",
+        "run_id": "integer",
+        "file_name": "string",
+        "file_fingerprint": "string",
+        "row": "integer",
+        "reason": "string",
+        "fields": "string",
+        "inserted_at": "datetime",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "run_id": "import_runs"
+      }
+    },
+    "import_runs": {
+      "colunas": {
+        "id": "integer",
+        "source_key": "string",
+        "status": "string",
+        "timezone": "string",
+        "date_limit": "datetime",
+        "date_limit_captured": "boolean",
+        "car_id": "integer",
+        "inserted_at": "datetime",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "car_id": "cars"
+      }
+    },
+    "positions": {
+      "colunas": {
+        "id": "integer",
+        "date": "datetime",
+        "latitude": "decimal",
+        "longitude": "decimal",
+        "speed": "integer",
+        "power": "integer",
+        "odometer": "decimal",
+        "ideal_battery_range_km": "decimal",
+        "battery_level": "integer",
+        "outside_temp": "decimal",
+        "elevation": "integer",
+        "fan_status": "integer",
+        "driver_temp_setting": "decimal",
+        "passenger_temp_setting": "decimal",
+        "is_climate_on": "boolean",
+        "is_rear_defroster_on": "boolean",
+        "is_front_defroster_on": "boolean",
+        "car_id": "integer",
+        "drive_id": "integer",
+        "inside_temp": "decimal",
+        "battery_heater": "boolean",
+        "battery_heater_on": "boolean",
+        "battery_heater_no_power": "boolean",
+        "est_battery_range_km": "decimal",
+        "rated_battery_range_km": "decimal",
+        "usable_battery_level": "integer",
+        "tpms_pressure_fl": "decimal",
+        "tpms_pressure_fr": "decimal",
+        "tpms_pressure_rl": "decimal",
+        "tpms_pressure_rr": "decimal"
+      },
+      "fks": {
+        "car_id": "cars",
+        "drive_id": "drives"
+      }
+    },
+    "settings": {
+      "colunas": {
+        "id": "integer",
+        "inserted_at": "string",
+        "updated_at": "string",
+        "unit_of_length": "string",
+        "unit_of_temperature": "string",
+        "preferred_range": "string",
+        "base_url": "string",
+        "grafana_url": "string",
+        "language": "string",
+        "unit_of_pressure": "string",
+        "theme_mode": "string"
+      },
+      "fks": {}
+    },
+    "states": {
+      "colunas": {
+        "id": "integer",
+        "state": "string",
+        "start_date": "datetime",
+        "end_date": "datetime",
+        "car_id": "integer"
+      },
+      "fks": {
+        "car_id": "cars"
+      }
+    },
+    "updates": {
+      "colunas": {
+        "id": "integer",
+        "start_date": "datetime",
+        "end_date": "datetime",
+        "version": "string",
+        "car_id": "integer"
+      },
+      "fks": {
+        "car_id": "cars"
+      }
+    },
+    "tokens": {
+      "colunas": {
+        "id": "integer",
+        "inserted_at": "datetime",
+        "updated_at": "datetime",
+        "refresh": "string",
+        "access": "string"
+      },
+      "fks": {}
+    }
+  }
+}

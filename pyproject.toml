@@ -1,0 +1,61 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "engrev-backend"
+version = "0.1.0"
+description = "Backend da plataforma de engenharia reversa assistida por IA."
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.32",
+    "sqlalchemy>=2.0.36",
+    "psycopg[binary]>=3.2",
+    "alembic>=1.14",
+    "pydantic>=2.9",
+    "pydantic-settings>=2.6",
+    "PyJWT>=2.10",
+    "bcrypt>=4.2",
+    "python-multipart>=0.0.12",
+    "email-validator>=2.2",
+    "httpx>=0.28",
+    # Teto em <0.26 e deliberado. Em 0.26.0 reter objetos `Node` e reusa-los
+    # depois de nova travessia corrompe memoria: segmentation fault que derruba
+    # o worker, sem excecao para tratar. Reproduzido com script sem nenhum codigo
+    # deste projeto, em java (ABI 14) e python (ABI 15) -- nao e questao de
+    # gramatica nem de ABI. 0.25.2: 0/5 crashes; 0.26.0: 3/3. Antes de subir este
+    # teto, rodar backend/scripts/avaliar.py --projeto spring-petclinic.
+    "tree-sitter>=0.25,<0.26",
+    "tree-sitter-python>=0.23",
+    "tree-sitter-typescript>=0.23",
+    "tree-sitter-java>=0.23",
+    "tree-sitter-c-sharp>=0.23",
+    "tree-sitter-html>=0.23",
+    "tree-sitter-markdown>=0.5",
+    "sqlglot>=25",
+    "PyYAML>=6",
+    "graphql-core>=3.2",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3",
+    "ruff>=0.8",
+]
+
+[tool.setuptools]
+packages = []
+
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+
+[tool.ruff.lint.per-file-ignores]
+"app/api/*.py" = ["B008"]
+"app/helpers/auth.py" = ["B008"]
+
+[tool.pytest.ini_options]
+testpaths = ["avaliacao/testes"]
+pythonpath = ["."]
+addopts = "-q"

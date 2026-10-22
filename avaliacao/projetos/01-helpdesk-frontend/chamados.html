@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chamados abertos</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="topo">
+    <h1>Central de Chamados</h1>
+    <nav>
+      <a href="chamados.html" class="ativo">Chamados</a>
+      <a href="novo-chamado.html">Abrir chamado</a>
+      <a href="cliente.html">Clientes</a>
+      <a href="relatorio.html">Relat&oacute;rios</a>
+    </nav>
+  </header>
+
+  <main class="conteudo">
+    <h2>Chamados</h2>
+
+    <!-- Filtros aplicados no cliente pelo app.js; nao ha submit para servidor -->
+    <div class="filtros">
+      <label for="filtro-status">Status</label>
+      <select id="filtro-status">
+        <option value="">Todos</option>
+        <option value="aberto">Aberto</option>
+        <option value="em_atendimento">Em atendimento</option>
+        <option value="aguardando_cliente">Aguardando cliente</option>
+        <option value="fechado">Fechado</option>
+      </select>
+
+      <label for="filtro-prioridade">Prioridade</label>
+      <select id="filtro-prioridade">
+        <option value="">Todas</option>
+        <option value="baixa">Baixa</option>
+        <option value="media">M&eacute;dia</option>
+        <option value="alta">Alta</option>
+        <option value="critica">Cr&iacute;tica</option>
+      </select>
+
+      <label for="filtro-busca">Buscar</label>
+      <input type="search" id="filtro-busca" placeholder="t&iacute;tulo ou protocolo">
+
+      <button type="button" onclick="App.aplicarFiltros()">Filtrar</button>
+    </div>
+
+    <table id="tabela-chamados">
+      <thead>
+        <tr>
+          <th>Protocolo</th>
+          <th>T&iacute;tulo</th>
+          <th>Cliente</th>
+          <th>Categoria</th>
+          <th>T&eacute;cnico</th>
+          <th>Prioridade</th>
+          <th>Status</th>
+          <th>Aberto em</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <p class="vazio" id="aviso-vazio" hidden>Nenhum chamado encontrado para os filtros aplicados.</p>
+  </main>
+
+  <script src="js/models.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    App.listarChamados();
+  </script>
+</body>
+</html>

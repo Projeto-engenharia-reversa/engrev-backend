@@ -1,0 +1,89 @@
+{
+  "projeto": "01-helpdesk-frontend",
+  "fonte_da_verdade": "classes em js/models.js, completadas pelos dados de exemplo em data/*.json",
+  "confianca": "media",
+  "notas": [
+    "Não há schema declarado; o tipo de cada coluna vem do valor inicial do campo na classe JS.",
+    "Campo de formulário e identificador de sessão não entram: são controle de interface."
+  ],
+  "tabelas": {
+    "chamados": {
+      "colunas": {
+        "id": "integer",
+        "protocolo": "string",
+        "titulo": "string",
+        "descricao": "string",
+        "cliente_id": "integer",
+        "categoria_id": "integer",
+        "tecnico_id": "integer",
+        "prioridade": "string",
+        "status": "string",
+        "prazo_limite": "date",
+        "horas_estimadas": "decimal",
+        "horas_gastas": "decimal",
+        "reincidente": "boolean",
+        "aberto_em": "datetime",
+        "fechado_em": "datetime"
+      },
+      "fks": {
+        "cliente_id": "clientes",
+        "categoria_id": "categorias",
+        "tecnico_id": "tecnicos"
+      }
+    },
+    "clientes": {
+      "colunas": {
+        "id": "integer",
+        "razao_social": "string",
+        "nome_fantasia": "string",
+        "cnpj": "string",
+        "email_contato": "string",
+        "telefone": "string",
+        "cidade": "string",
+        "uf": "string",
+        "cliente_desde": "date",
+        "contrato_ativo": "boolean",
+        "observacoes": "string"
+      },
+      "fks": {}
+    },
+    "tecnicos": {
+      "colunas": {
+        "id": "integer",
+        "nome": "string",
+        "email": "string",
+        "equipe": "string",
+        "ramal": "string",
+        "ativo": "boolean",
+        "chamados_simultaneos": "integer"
+      },
+      "fks": {}
+    },
+    "categorias": {
+      "colunas": {
+        "id": "integer",
+        "nome": "string",
+        "descricao": "string",
+        "sla_horas": "integer",
+        "ativo": "boolean",
+        "equipe_responsavel": "string",
+        "exige_aprovacao": "boolean"
+      },
+      "fks": {}
+    },
+    "comentarios": {
+      "colunas": {
+        "id": "integer",
+        "chamado_id": "integer",
+        "tecnico_id": "integer",
+        "mensagem": "string",
+        "visivel_cliente": "boolean",
+        "criado_em": "datetime"
+      },
+      "fks": {
+        "chamado_id": "chamados",
+        "tecnico_id": "tecnicos"
+      }
+    }
+  }
+}

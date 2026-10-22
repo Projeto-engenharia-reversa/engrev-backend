@@ -1,0 +1,102 @@
+{
+  "projeto": "laravel-realworld-example-app",
+  "externo": true,
+  "origem": "https://github.com/gothinkster/laravel-realworld-example-app",
+  "fonte_da_verdade": "database/migrations/*.php, com colunas, chaves e foreign() explícitos",
+  "confianca": "alta",
+  "notas": [
+    "Chave composta em article_tag, favorites e follows.",
+    "article_tag está no singular por convenção do Laravel, e é o nome real."
+  ],
+  "tabelas": {
+    "users": {
+      "colunas": {
+        "id": "integer",
+        "username": "string",
+        "email": "string",
+        "password": "string",
+        "bio": "string",
+        "image": "string",
+        "remember_token": "string",
+        "created_at": "datetime",
+        "updated_at": "datetime"
+      },
+      "fks": {}
+    },
+    "articles": {
+      "colunas": {
+        "id": "integer",
+        "user_id": "integer",
+        "slug": "string",
+        "title": "string",
+        "description": "string",
+        "body": "string",
+        "created_at": "datetime",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "user_id": "users"
+      }
+    },
+    "comments": {
+      "colunas": {
+        "id": "integer",
+        "user_id": "integer",
+        "article_id": "integer",
+        "body": "string",
+        "created_at": "datetime",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "user_id": "users",
+        "article_id": "articles"
+      }
+    },
+    "tags": {
+      "colunas": {
+        "id": "integer",
+        "name": "string",
+        "created_at": "datetime",
+        "updated_at": "datetime"
+      },
+      "fks": {}
+    },
+    "article_tag": {
+      "colunas": {
+        "article_id": "integer",
+        "tag_id": "integer"
+      },
+      "fks": {
+        "article_id": "articles",
+        "tag_id": "tags"
+      }
+    },
+    "favorites": {
+      "colunas": {
+        "user_id": "integer",
+        "article_id": "integer",
+        "created_at": "datetime",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "user_id": "users",
+        "article_id": "articles"
+      }
+    },
+    "follows": {
+      "colunas": {
+        "follower_id": "integer",
+        "followed_id": "integer",
+        "created_at": "datetime",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "follower_id": "users",
+        "followed_id": "users"
+      }
+    }
+  },
+  "arquivos_de_schema": [
+    "database/migrations/"
+  ]
+}

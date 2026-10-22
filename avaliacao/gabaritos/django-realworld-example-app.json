@@ -1,0 +1,119 @@
+{
+  "projeto": "django-realworld-example-app",
+  "externo": true,
+  "origem": "https://github.com/gothinkster/django-realworld-example-app",
+  "fonte_da_verdade": "conduit/apps/*/migrations/*.py, conferidas contra os models.py",
+  "arquivos_de_schema": [
+    "migrations/",
+    "models.py"
+  ],
+  "nota_sem_schema": "Sai a migration e o models.py, porque no Django o tipo está declarado na classe. Sobram serializers e views, com nome de campo em camelCase de API.",
+  "confianca": "alta",
+  "notas": [
+    "Os nomes são conceituais; o nome físico do Django seria <app>_<model>, e a divergência é medida em separado.",
+    "users traz password, last_login e is_superuser por herança. Os M2M para tabelas do framework ficam fora.",
+    "Três M2M viram junção: article_tags, profile_follows e profile_favorites."
+  ],
+  "tabelas": {
+    "users": {
+      "colunas": {
+        "id": "integer",
+        "username": "string",
+        "email": "string",
+        "is_active": "boolean",
+        "is_staff": "boolean",
+        "is_superuser": "boolean",
+        "password": "string",
+        "last_login": "datetime",
+        "created_at": "datetime",
+        "updated_at": "datetime"
+      },
+      "fks": {}
+    },
+    "profiles": {
+      "colunas": {
+        "id": "integer",
+        "user_id": "integer",
+        "bio": "string",
+        "image": "string",
+        "created_at": "datetime",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "user_id": "users"
+      }
+    },
+    "articles": {
+      "colunas": {
+        "id": "integer",
+        "slug": "string",
+        "title": "string",
+        "description": "string",
+        "body": "string",
+        "author_id": "integer",
+        "created_at": "datetime",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "author_id": "profiles"
+      }
+    },
+    "comments": {
+      "colunas": {
+        "id": "integer",
+        "body": "string",
+        "article_id": "integer",
+        "author_id": "integer",
+        "created_at": "datetime",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "article_id": "articles",
+        "author_id": "profiles"
+      }
+    },
+    "tags": {
+      "colunas": {
+        "id": "integer",
+        "tag": "string",
+        "slug": "string",
+        "created_at": "datetime",
+        "updated_at": "datetime"
+      },
+      "fks": {}
+    },
+    "article_tags": {
+      "colunas": {
+        "id": "integer",
+        "article_id": "integer",
+        "tag_id": "integer"
+      },
+      "fks": {
+        "article_id": "articles",
+        "tag_id": "tags"
+      }
+    },
+    "profile_follows": {
+      "colunas": {
+        "id": "integer",
+        "from_profile_id": "integer",
+        "to_profile_id": "integer"
+      },
+      "fks": {
+        "from_profile_id": "profiles",
+        "to_profile_id": "profiles"
+      }
+    },
+    "profile_favorites": {
+      "colunas": {
+        "id": "integer",
+        "profile_id": "integer",
+        "article_id": "integer"
+      },
+      "fks": {
+        "profile_id": "profiles",
+        "article_id": "articles"
+      }
+    }
+  }
+}

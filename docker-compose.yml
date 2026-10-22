@@ -1,0 +1,48 @@
+# Sobe a aplicação inteira. O frontend vive em outro repositório e é esperado
+# como pasta irmã desta, clonado com o nome engrev-frontend:
+#
+#   git clone .../engrev-backend
+#   git clone .../engrev-frontend
+#   cd engrev-backend && cp .env.example .env && docker compose up -d --build
+#
+# Para subir só a API e o banco, sem a interface:
+#   docker compose up -d db backend
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: engrev
+      POSTGRES_PASSWORD: engrev
+      POSTGRES_DB: engrev
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U engrev"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build: .
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql+psycopg://engrev:engrev@db/engrev
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./storage:/app/storage
+
+  frontend:
+    build: ../engrev-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+volumes:
+  pgdata:

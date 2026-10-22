@@ -1,0 +1,116 @@
+{
+  "projeto": "rails-realworld-example-app",
+  "externo": true,
+  "origem": "https://github.com/gothinkster/rails-realworld-example-app",
+  "fonte_da_verdade": "db/schema.rb, o dump que o próprio Rails gera",
+  "confianca": "alta",
+  "notas": [
+    "follows e taggings vêm de gems e usam associação polimórfica, então ficam sem chave estrangeira.",
+    "users vem do Devise; os campos de autenticação e os contadores de cache são colunas reais."
+  ],
+  "tabelas": {
+    "users": {
+      "colunas": {
+        "id": "integer",
+        "email": "string",
+        "encrypted_password": "string",
+        "reset_password_token": "string",
+        "reset_password_sent_at": "datetime",
+        "remember_created_at": "datetime",
+        "sign_in_count": "integer",
+        "current_sign_in_at": "datetime",
+        "last_sign_in_at": "datetime",
+        "current_sign_in_ip": "string",
+        "last_sign_in_ip": "string",
+        "created_at": "datetime",
+        "updated_at": "datetime",
+        "username": "string",
+        "image": "string",
+        "bio": "string"
+      },
+      "fks": {}
+    },
+    "articles": {
+      "colunas": {
+        "id": "integer",
+        "title": "string",
+        "slug": "string",
+        "body": "string",
+        "description": "string",
+        "favorites_count": "integer",
+        "user_id": "integer",
+        "created_at": "datetime",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "user_id": "users"
+      }
+    },
+    "comments": {
+      "colunas": {
+        "id": "integer",
+        "body": "string",
+        "user_id": "integer",
+        "article_id": "integer",
+        "created_at": "datetime",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "user_id": "users",
+        "article_id": "articles"
+      }
+    },
+    "favorites": {
+      "colunas": {
+        "id": "integer",
+        "user_id": "integer",
+        "article_id": "integer",
+        "created_at": "datetime",
+        "updated_at": "datetime"
+      },
+      "fks": {
+        "user_id": "users",
+        "article_id": "articles"
+      }
+    },
+    "follows": {
+      "colunas": {
+        "id": "integer",
+        "followable_id": "integer",
+        "followable_type": "string",
+        "follower_id": "integer",
+        "follower_type": "string",
+        "blocked": "boolean",
+        "created_at": "datetime",
+        "updated_at": "datetime"
+      },
+      "fks": {}
+    },
+    "tags": {
+      "colunas": {
+        "id": "integer",
+        "name": "string",
+        "taggings_count": "integer"
+      },
+      "fks": {}
+    },
+    "taggings": {
+      "colunas": {
+        "id": "integer",
+        "tag_id": "integer",
+        "taggable_id": "integer",
+        "taggable_type": "string",
+        "tagger_id": "integer",
+        "tagger_type": "string",
+        "context": "string",
+        "created_at": "datetime"
+      },
+      "fks": {
+        "tag_id": "tags"
+      }
+    }
+  },
+  "arquivos_de_schema": [
+    "db/"
+  ]
+}

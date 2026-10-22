@@ -1,0 +1,65 @@
+{
+  "projeto": "matterwiki",
+  "externo": true,
+  "origem": "https://github.com/Matterwiki/Matterwiki",
+  "fonte_da_verdade": "as 9 migrations Knex do próprio projeto, executadas contra um knex falso que registra as chamadas",
+  "confianca": "alta",
+  "notas": [
+    "As migrations Knex são código JavaScript, que nem o parser nem o sqlglot leem."
+  ],
+  "tabelas": {
+    "articles": {
+      "colunas": {
+        "id": "integer",
+        "title": "string",
+        "body": "string",
+        "created_at": "timestamp",
+        "updated_at": "timestamp",
+        "topic_id": "integer",
+        "user_id": "integer",
+        "what_changed": "string"
+      },
+      "fks": {
+        "topic_id": "topics",
+        "user_id": "users"
+      }
+    },
+    "topics": {
+      "colunas": {
+        "id": "integer",
+        "name": "string",
+        "description": "string",
+        "created_at": "timestamp",
+        "updated_at": "timestamp"
+      },
+      "fks": {}
+    },
+    "archives": {
+      "colunas": {
+        "id": "integer",
+        "article_id": "integer",
+        "title": "string",
+        "body": "string",
+        "updated_at": "timestamp",
+        "user_id": "integer",
+        "what_changed": "string"
+      },
+      "fks": {
+        "article_id": "articles",
+        "user_id": "users"
+      }
+    },
+    "users": {
+      "colunas": {
+        "id": "integer",
+        "name": "string",
+        "email": "string",
+        "password": "string",
+        "about": "string",
+        "created_at": "timestamp",
+        "updated_at": "timestamp"
+      },
+      "fks": {}
+    }
+  }
+}

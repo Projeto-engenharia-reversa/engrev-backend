@@ -1,0 +1,56 @@
+// Banco de assinaturas e cobrança.
+// Fonte de verdade do serviço de billing; o catálogo em si vive nos outros
+// serviços (ver proto/ e graphql/).
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Plano {
+  id                Int          @id @default(autoincrement())
+  nome              String
+  precoMensal       Decimal
+  qualidadeMaxima   String
+  telasSimultaneas  Int
+  permiteDownload   Boolean
+  ativo             Boolean
+  assinantes        Assinante[]
+}
+
+model Assinante {
+  id             Int          @id @default(autoincrement())
+  email          String       @unique
+  nomeCompleto   String
+  documento      String?
+  senhaHash      String
+  planoId        Int
+  plano          Plano        @relation(fields: [planoId], references: [id])
+  assinaturaDesde DateTime
+  canceladoEm    DateTime?
+  dispositivos   Dispositivo[]
+}
+
+model Dispositivo {
+  id            Int        @id @default(autoincrement())
+  assinanteId   Int
+  assinante     Assinante  @relation(fields: [assinanteId], references: [id])
+  apelido       String
+  plataforma    String
+  ultimoAcesso  DateTime?
+  bloqueado     Boolean
+}
+
+model Cobranca {
+  id            Int        @id @default(autoincrement())
+  assinanteId   Int
+  competencia   String
+  valor         Decimal
+  status        String
+  pagoEm        DateTime?
+  tentativas    Int
+}

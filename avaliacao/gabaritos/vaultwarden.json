@@ -1,0 +1,417 @@
+{
+  "projeto": "vaultwarden",
+  "externo": true,
+  "origem": "https://github.com/dani-garcia/vaultwarden",
+  "fonte_da_verdade": "src/db/schema.rs, o dump que o próprio Diesel gera e o projeto versiona",
+  "confianca": "alta",
+  "notas": [
+    "As macros table! declaram coluna e tipo; as joinable! declaram as chaves estrangeiras.",
+    "Há migrations para três bancos, cada uma com up.sql e down.sql, declarando o mesmo schema três vezes."
+  ],
+  "tabelas": {
+    "attachments": {
+      "colunas": {
+        "id": "string",
+        "cipher_uuid": "string",
+        "file_name": "string",
+        "file_size": "integer",
+        "akey": "string"
+      },
+      "fks": {
+        "cipher_uuid": "ciphers"
+      }
+    },
+    "ciphers": {
+      "colunas": {
+        "uuid": "string",
+        "created_at": "datetime",
+        "updated_at": "datetime",
+        "user_uuid": "string",
+        "organization_uuid": "string",
+        "key": "string",
+        "atype": "integer",
+        "name": "string",
+        "notes": "string",
+        "fields": "string",
+        "data": "string",
+        "password_history": "string",
+        "deleted_at": "datetime",
+        "reprompt": "integer"
+      },
+      "fks": {
+        "organization_uuid": "organizations",
+        "user_uuid": "users"
+      }
+    },
+    "ciphers_collections": {
+      "colunas": {
+        "cipher_uuid": "string",
+        "collection_uuid": "string"
+      },
+      "fks": {
+        "cipher_uuid": "ciphers",
+        "collection_uuid": "collections"
+      }
+    },
+    "collections": {
+      "colunas": {
+        "uuid": "string",
+        "org_uuid": "string",
+        "name": "string",
+        "external_id": "string"
+      },
+      "fks": {
+        "org_uuid": "organizations"
+      }
+    },
+    "devices": {
+      "colunas": {
+        "uuid": "string",
+        "created_at": "datetime",
+        "updated_at": "datetime",
+        "user_uuid": "string",
+        "name": "string",
+        "atype": "integer",
+        "push_uuid": "string",
+        "push_token": "string",
+        "refresh_token": "string",
+        "twofactor_remember": "string"
+      },
+      "fks": {
+        "user_uuid": "users"
+      }
+    },
+    "event": {
+      "colunas": {
+        "uuid": "string",
+        "event_type": "integer",
+        "user_uuid": "string",
+        "org_uuid": "string",
+        "cipher_uuid": "string",
+        "collection_uuid": "string",
+        "group_uuid": "string",
+        "org_user_uuid": "string",
+        "act_user_uuid": "string",
+        "device_type": "integer",
+        "ip_address": "string",
+        "event_date": "datetime",
+        "policy_uuid": "string",
+        "provider_uuid": "string",
+        "provider_user_uuid": "string",
+        "provider_org_uuid": "string"
+      },
+      "fks": {
+        "uuid": "users_organizations"
+      }
+    },
+    "favorites": {
+      "colunas": {
+        "user_uuid": "string",
+        "cipher_uuid": "string"
+      },
+      "fks": {}
+    },
+    "folders": {
+      "colunas": {
+        "uuid": "string",
+        "created_at": "datetime",
+        "updated_at": "datetime",
+        "user_uuid": "string",
+        "name": "string"
+      },
+      "fks": {
+        "user_uuid": "users"
+      }
+    },
+    "folders_ciphers": {
+      "colunas": {
+        "cipher_uuid": "string",
+        "folder_uuid": "string"
+      },
+      "fks": {
+        "cipher_uuid": "ciphers",
+        "folder_uuid": "folders"
+      }
+    },
+    "invitations": {
+      "colunas": {
+        "email": "string"
+      },
+      "fks": {}
+    },
+    "org_policies": {
+      "colunas": {
+        "uuid": "string",
+        "org_uuid": "string",
+        "atype": "integer",
+        "enabled": "boolean",
+        "data": "string"
+      },
+      "fks": {
+        "org_uuid": "organizations"
+      }
+    },
+    "organizations": {
+      "colunas": {
+        "uuid": "string",
+        "name": "string",
+        "billing_email": "string",
+        "private_key": "string",
+        "public_key": "string"
+      },
+      "fks": {}
+    },
+    "sends": {
+      "colunas": {
+        "uuid": "string",
+        "user_uuid": "string",
+        "organization_uuid": "string",
+        "name": "string",
+        "notes": "string",
+        "atype": "integer",
+        "data": "string",
+        "akey": "string",
+        "password_hash": "string",
+        "password_salt": "string",
+        "password_iter": "integer",
+        "max_access_count": "integer",
+        "access_count": "integer",
+        "creation_date": "datetime",
+        "revision_date": "datetime",
+        "expiration_date": "datetime",
+        "deletion_date": "datetime",
+        "disabled": "boolean",
+        "hide_email": "boolean"
+      },
+      "fks": {
+        "organization_uuid": "organizations",
+        "user_uuid": "users"
+      }
+    },
+    "twofactor": {
+      "colunas": {
+        "uuid": "string",
+        "user_uuid": "string",
+        "atype": "integer",
+        "enabled": "boolean",
+        "data": "string",
+        "last_used": "integer"
+      },
+      "fks": {
+        "user_uuid": "users"
+      }
+    },
+    "twofactor_incomplete": {
+      "colunas": {
+        "user_uuid": "string",
+        "device_uuid": "string",
+        "device_name": "string",
+        "device_type": "integer",
+        "login_time": "datetime",
+        "ip_address": "string"
+      },
+      "fks": {}
+    },
+    "twofactor_duo_ctx": {
+      "colunas": {
+        "state": "string",
+        "user_email": "string",
+        "nonce": "string",
+        "exp": "integer"
+      },
+      "fks": {}
+    },
+    "users": {
+      "colunas": {
+        "uuid": "string",
+        "enabled": "boolean",
+        "created_at": "datetime",
+        "updated_at": "datetime",
+        "verified_at": "datetime",
+        "last_verifying_at": "datetime",
+        "login_verify_count": "integer",
+        "email": "string",
+        "email_new": "string",
+        "email_new_token": "string",
+        "name": "string",
+        "password_hash": "string",
+        "salt": "string",
+        "password_iterations": "integer",
+        "password_hint": "string",
+        "akey": "string",
+        "private_key": "string",
+        "public_key": "string",
+        "totp_secret": "string",
+        "totp_recover": "string",
+        "security_stamp": "string",
+        "stamp_exception": "string",
+        "equivalent_domains": "string",
+        "excluded_globals": "string",
+        "client_kdf_type": "integer",
+        "client_kdf_iter": "integer",
+        "client_kdf_memory": "integer",
+        "client_kdf_parallelism": "integer",
+        "api_key": "string",
+        "avatar_color": "string",
+        "external_id": "string"
+      },
+      "fks": {}
+    },
+    "users_collections": {
+      "colunas": {
+        "user_uuid": "string",
+        "collection_uuid": "string",
+        "read_only": "boolean",
+        "hide_passwords": "boolean",
+        "manage": "boolean"
+      },
+      "fks": {
+        "collection_uuid": "collections",
+        "user_uuid": "users"
+      }
+    },
+    "users_organizations": {
+      "colunas": {
+        "uuid": "string",
+        "user_uuid": "string",
+        "org_uuid": "string",
+        "invited_by_email": "string",
+        "access_all": "boolean",
+        "akey": "string",
+        "status": "integer",
+        "atype": "integer",
+        "reset_password_key": "string",
+        "external_id": "string"
+      },
+      "fks": {
+        "org_uuid": "ciphers",
+        "user_uuid": "users"
+      }
+    },
+    "organization_api_key": {
+      "colunas": {
+        "uuid": "string",
+        "org_uuid": "string",
+        "atype": "integer",
+        "api_key": "string",
+        "revision_date": "datetime"
+      },
+      "fks": {
+        "org_uuid": "organizations"
+      }
+    },
+    "sso_auth": {
+      "colunas": {
+        "state": "string",
+        "client_challenge": "string",
+        "nonce": "string",
+        "redirect_uri": "string",
+        "code_response": "string",
+        "code_response_error": "string",
+        "auth_response": "string",
+        "created_at": "datetime",
+        "updated_at": "datetime",
+        "binding_hash": "string"
+      },
+      "fks": {}
+    },
+    "sso_users": {
+      "colunas": {
+        "user_uuid": "string",
+        "identifier": "string"
+      },
+      "fks": {
+        "user_uuid": "users"
+      }
+    },
+    "emergency_access": {
+      "colunas": {
+        "uuid": "string",
+        "grantor_uuid": "string",
+        "grantee_uuid": "string",
+        "email": "string",
+        "key_encrypted": "string",
+        "atype": "integer",
+        "status": "integer",
+        "wait_time_days": "integer",
+        "recovery_initiated_at": "datetime",
+        "last_notification_at": "datetime",
+        "updated_at": "datetime",
+        "created_at": "datetime"
+      },
+      "fks": {
+        "grantor_uuid": "users"
+      }
+    },
+    "groups": {
+      "colunas": {
+        "uuid": "string",
+        "organizations_uuid": "string",
+        "name": "string",
+        "access_all": "boolean",
+        "external_id": "string",
+        "creation_date": "datetime",
+        "revision_date": "datetime"
+      },
+      "fks": {
+        "organizations_uuid": "organizations"
+      }
+    },
+    "groups_users": {
+      "colunas": {
+        "groups_uuid": "string",
+        "users_organizations_uuid": "string"
+      },
+      "fks": {
+        "users_organizations_uuid": "users_organizations",
+        "groups_uuid": "groups"
+      }
+    },
+    "collections_groups": {
+      "colunas": {
+        "collections_uuid": "string",
+        "groups_uuid": "string",
+        "read_only": "boolean",
+        "hide_passwords": "boolean",
+        "manage": "boolean"
+      },
+      "fks": {
+        "collections_uuid": "collections",
+        "groups_uuid": "groups"
+      }
+    },
+    "auth_requests": {
+      "colunas": {
+        "uuid": "string",
+        "user_uuid": "string",
+        "organization_uuid": "string",
+        "request_device_identifier": "string",
+        "device_type": "integer",
+        "request_ip": "string",
+        "response_device_id": "string",
+        "access_code": "string",
+        "public_key": "string",
+        "enc_key": "string",
+        "master_password_hash": "string",
+        "approved": "boolean",
+        "creation_date": "datetime",
+        "response_date": "datetime",
+        "authentication_date": "datetime"
+      },
+      "fks": {
+        "user_uuid": "users"
+      }
+    },
+    "archives": {
+      "colunas": {
+        "user_uuid": "string",
+        "cipher_uuid": "string",
+        "archived_at": "datetime"
+      },
+      "fks": {
+        "user_uuid": "users",
+        "cipher_uuid": "ciphers"
+      }
+    }
+  }
+}

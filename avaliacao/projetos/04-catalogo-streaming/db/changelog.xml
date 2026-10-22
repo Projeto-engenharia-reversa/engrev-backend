@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+  <!-- Telemetria de reproducao. Fica em banco proprio, separado do catalogo,
+       porque o volume de escrita e muito maior. -->
+
+  <changeSet id="001-reproducoes" author="dados">
+    <createTable tableName="reproducoes">
+      <column name="id" type="BIGINT" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="assinante_id" type="INT">
+        <constraints nullable="false"/>
+      </column>
+      <column name="faixa_id" type="BIGINT">
+        <constraints nullable="false"/>
+      </column>
+      <column name="dispositivo_id" type="INT"/>
+      <column name="iniciada_em" type="TIMESTAMP">
+        <constraints nullable="false"/>
+      </column>
+      <column name="segundos_ouvidos" type="INT"/>
+      <column name="concluida" type="BOOLEAN"/>
+      <column name="origem" type="VARCHAR(30)"/>
+    </createTable>
+  </changeSet>
+
+  <changeSet id="002-avaliacoes" author="dados">
+    <createTable tableName="avaliacoes">
+      <column name="id" type="BIGINT" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="assinante_id" type="INT">
+        <constraints nullable="false"/>
+      </column>
+      <column name="album_id" type="BIGINT">
+        <constraints nullable="false"/>
+      </column>
+      <column name="nota" type="INT"/>
+      <column name="comentario" type="VARCHAR(1000)"/>
+      <column name="criada_em" type="TIMESTAMP"/>
+    </createTable>
+  </changeSet>
+
+</databaseChangeLog>

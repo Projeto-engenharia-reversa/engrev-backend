@@ -1,0 +1,93 @@
+{
+  "projeto": "spring-petclinic",
+  "externo": true,
+  "origem": "https://github.com/spring-projects/spring-petclinic",
+  "commit": "88e37c15cf6fc8490b01bc3e8e2c800cec1ac272",
+  "fonte_da_verdade": "src/main/resources/db/postgres/schema.sql",
+  "arquivos_de_schema": [
+    "src/main/resources/db/",
+    "petclinic/model/",
+    "owner/Owner.java",
+    "owner/Pet.java",
+    "owner/PetType.java",
+    "owner/Visit.java",
+    "vet/Vet.java",
+    "vet/Specialty.java"
+  ],
+  "nota_sem_schema": "Sai tudo que declara coluna e tipo, o DDL e as classes anotadas com @Entity ou @MappedSuperclass. Sobram controllers, repositories e os templates Thymeleaf.",
+  "confianca": "alta",
+  "notas": [
+    "O gabarito é o schema que os autores do projeto escreveram, não uma leitura do código.",
+    "Hierarquia @MappedSuperclass: id, name, first_name e last_name vêm das superclasses.",
+    "vet_specialties não declara PRIMARY KEY no DDL, só UNIQUE (vet_id, specialty_id)."
+  ],
+  "tabelas": {
+    "vets": {
+      "colunas": {
+        "id": "integer",
+        "first_name": "string",
+        "last_name": "string"
+      },
+      "fks": {}
+    },
+    "specialties": {
+      "colunas": {
+        "id": "integer",
+        "name": "string"
+      },
+      "fks": {}
+    },
+    "vet_specialties": {
+      "colunas": {
+        "vet_id": "integer",
+        "specialty_id": "integer"
+      },
+      "fks": {
+        "vet_id": "vets",
+        "specialty_id": "specialties"
+      }
+    },
+    "types": {
+      "colunas": {
+        "id": "integer",
+        "name": "string"
+      },
+      "fks": {}
+    },
+    "owners": {
+      "colunas": {
+        "id": "integer",
+        "first_name": "string",
+        "last_name": "string",
+        "address": "string",
+        "city": "string",
+        "telephone": "string"
+      },
+      "fks": {}
+    },
+    "pets": {
+      "colunas": {
+        "id": "integer",
+        "name": "string",
+        "birth_date": "date",
+        "type_id": "integer",
+        "owner_id": "integer"
+      },
+      "fks": {
+        "type_id": "types",
+        "owner_id": "owners"
+      }
+    },
+    "visits": {
+      "colunas": {
+        "id": "integer",
+        "pet_id": "integer",
+        "visit_date": "date",
+        "description": "string"
+      },
+      "fks": {
+        "pet_id": "pets"
+      }
+    }
+  }
+}

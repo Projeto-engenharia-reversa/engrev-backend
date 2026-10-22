@@ -1,0 +1,228 @@
+{
+  "projeto": "04-catalogo-streaming",
+  "fonte_da_verdade": "prisma/schema.prisma, graphql/schema.graphql, proto/catalogo.proto, openapi/api.yaml, db/changelog.xml e src/Recomendacao/Models/Recomendacao.cs",
+  "confianca": "alta",
+  "notas": [
+    "Album aparece em três fontes e vale a união das colunas; Assinante aparece em duas, e o Prisma é a completa.",
+    "Envelope de RPC e o Query do GraphQL não são entidades.",
+    "Os nomes usam plural português. Com NAMING_PLURAL=en a grafia muda, e a divergência de nome é medida em separado.",
+    "Os nomes das três entidades C# têm confiança menor: as classes não declaram nome de tabela."
+  ],
+  "tabelas": {
+    "planos": {
+      "colunas": {
+        "id": "integer",
+        "nome": "string",
+        "preco_mensal": "decimal",
+        "qualidade_maxima": "string",
+        "telas_simultaneas": "integer",
+        "permite_download": "boolean",
+        "ativo": "boolean"
+      },
+      "fks": {}
+    },
+    "assinantes": {
+      "colunas": {
+        "id": "integer",
+        "email": "string",
+        "nome_completo": "string",
+        "documento": "string",
+        "senha_hash": "string",
+        "plano_id": "integer",
+        "assinatura_desde": "datetime",
+        "cancelado_em": "datetime"
+      },
+      "fks": {
+        "plano_id": "planos"
+      }
+    },
+    "dispositivos": {
+      "colunas": {
+        "id": "integer",
+        "assinante_id": "integer",
+        "apelido": "string",
+        "plataforma": "string",
+        "ultimo_acesso": "datetime",
+        "bloqueado": "boolean"
+      },
+      "fks": {
+        "assinante_id": "assinantes"
+      }
+    },
+    "cobrancas": {
+      "colunas": {
+        "id": "integer",
+        "assinante_id": "integer",
+        "competencia": "string",
+        "valor": "decimal",
+        "status": "string",
+        "pago_em": "datetime",
+        "tentativas": "integer"
+      },
+      "fks": {
+        "assinante_id": "assinantes"
+      }
+    },
+    "faixas": {
+      "colunas": {
+        "id": "integer",
+        "titulo": "string",
+        "duracao_segundos": "integer",
+        "numero_faixa": "integer",
+        "explicita": "boolean",
+        "isrc": "string",
+        "album_id": "integer",
+        "compositor": "string"
+      },
+      "fks": {
+        "album_id": "albuns"
+      }
+    },
+    "albuns": {
+      "colunas": {
+        "id": "integer",
+        "artista_id": "integer",
+        "titulo": "string",
+        "tipo": "string",
+        "data_lancamento": "date",
+        "total_faixas": "integer",
+        "gravadora": "string",
+        "capa_url": "string"
+      },
+      "fks": {
+        "artista_id": "artistas"
+      }
+    },
+    "playlists": {
+      "colunas": {
+        "id": "integer",
+        "nome": "string",
+        "descricao": "string",
+        "publica": "boolean",
+        "criada_em": "datetime",
+        "total_faixas": "integer",
+        "dono_id": "integer"
+      },
+      "fks": {
+        "dono_id": "assinantes"
+      }
+    },
+    "item_playlists": {
+      "colunas": {
+        "id": "integer",
+        "playlist_id": "integer",
+        "faixa_id": "integer",
+        "posicao": "integer",
+        "adicionada_em": "datetime"
+      },
+      "fks": {
+        "playlist_id": "playlists",
+        "faixa_id": "faixas"
+      }
+    },
+    "artistas": {
+      "colunas": {
+        "id": "integer",
+        "nome": "string",
+        "nome_artistico": "string",
+        "pais_origem": "string",
+        "ano_estreia": "integer",
+        "biografia": "string",
+        "verificado": "boolean"
+      },
+      "fks": {}
+    },
+    "generos": {
+      "colunas": {
+        "id": "integer",
+        "nome": "string",
+        "slug": "string",
+        "genero_pai_id": "integer"
+      },
+      "fks": {
+        "genero_pai_id": "generos"
+      }
+    },
+    "selos": {
+      "colunas": {
+        "id": "integer",
+        "nome": "string",
+        "pais": "string",
+        "fundado_em": "integer",
+        "ativo": "boolean"
+      },
+      "fks": {}
+    },
+    "reproducoes": {
+      "colunas": {
+        "id": "integer",
+        "assinante_id": "integer",
+        "faixa_id": "integer",
+        "dispositivo_id": "integer",
+        "iniciada_em": "datetime",
+        "segundos_ouvidos": "integer",
+        "concluida": "boolean",
+        "origem": "string"
+      },
+      "fks": {
+        "assinante_id": "assinantes",
+        "faixa_id": "faixas",
+        "dispositivo_id": "dispositivos"
+      }
+    },
+    "avaliacoes": {
+      "colunas": {
+        "id": "integer",
+        "assinante_id": "integer",
+        "album_id": "integer",
+        "nota": "integer",
+        "comentario": "string",
+        "criada_em": "datetime"
+      },
+      "fks": {
+        "assinante_id": "assinantes",
+        "album_id": "albuns"
+      }
+    },
+    "perfil_gostos": {
+      "colunas": {
+        "id": "integer",
+        "assinante_id": "integer",
+        "genero_preferido": "string",
+        "indice_descoberta": "decimal",
+        "indice_repeticao": "decimal",
+        "calculado_em": "datetime"
+      },
+      "fks": {
+        "assinante_id": "assinantes"
+      }
+    },
+    "recomendacoes": {
+      "colunas": {
+        "id": "integer",
+        "perfil_gosto_id": "integer",
+        "faixa_id": "integer",
+        "pontuacao": "decimal",
+        "motivo": "string",
+        "exibida": "boolean",
+        "aceita": "boolean",
+        "gerada_em": "datetime"
+      },
+      "fks": {
+        "perfil_gosto_id": "perfil_gostos",
+        "faixa_id": "faixas"
+      }
+    },
+    "campanhas_editoriais": {
+      "colunas": {
+        "id": "integer",
+        "titulo": "string",
+        "curador": "string",
+        "inicio_em": "datetime",
+        "fim_em": "datetime",
+        "destaque": "boolean"
+      },
+      "fks": {}
+    }
+  }
+}

@@ -1,0 +1,122 @@
+{
+  "projeto": "02-loja-python",
+  "fonte_da_verdade": "migrations/001_schema.sql e 002_add_desconto.sql, com os ALTER aplicados na ordem",
+  "confianca": "alta",
+  "notas": [
+    "produtos.peso_kg foi removida por ALTER TABLE e não entra.",
+    "pedidos.observacoes foi renomeada para anotacoes_internas; só o nome novo vale.",
+    "produtos.fornecedor_id é INTEGER sem REFERENCES: não é chave estrangeira declarada."
+  ],
+  "tabelas": {
+    "clientes": {
+      "colunas": {
+        "id": "integer",
+        "nome": "string",
+        "email": "string",
+        "cpf": "string",
+        "telefone": "string",
+        "senha_hash": "string",
+        "aceita_newsletter": "boolean",
+        "criado_em": "datetime"
+      },
+      "fks": {}
+    },
+    "enderecos": {
+      "colunas": {
+        "id": "integer",
+        "cliente_id": "integer",
+        "apelido": "string",
+        "logradouro": "string",
+        "numero": "string",
+        "complemento": "string",
+        "bairro": "string",
+        "cidade": "string",
+        "uf": "string",
+        "cep": "string",
+        "principal": "boolean"
+      },
+      "fks": {
+        "cliente_id": "clientes"
+      }
+    },
+    "categorias": {
+      "colunas": {
+        "id": "integer",
+        "nome": "string",
+        "slug": "string",
+        "descricao": "string",
+        "ordem_exibicao": "integer",
+        "ativa": "boolean"
+      },
+      "fks": {}
+    },
+    "produtos": {
+      "colunas": {
+        "id": "integer",
+        "categoria_id": "integer",
+        "fornecedor_id": "integer",
+        "sku": "string",
+        "nome": "string",
+        "descricao": "string",
+        "preco": "decimal",
+        "estoque_atual": "integer",
+        "estoque_minimo": "integer",
+        "ativo": "boolean",
+        "preco_promocional": "decimal"
+      },
+      "fks": {
+        "categoria_id": "categorias"
+      }
+    },
+    "pedidos": {
+      "colunas": {
+        "id": "integer",
+        "cliente_id": "integer",
+        "endereco_entrega_id": "integer",
+        "numero": "string",
+        "status": "string",
+        "valor_frete": "decimal",
+        "valor_total": "decimal",
+        "anotacoes_internas": "string",
+        "criado_em": "datetime",
+        "enviado_em": "datetime",
+        "cupom_codigo": "string",
+        "valor_desconto": "decimal"
+      },
+      "fks": {
+        "cliente_id": "clientes",
+        "endereco_entrega_id": "enderecos"
+      }
+    },
+    "itens_pedido": {
+      "colunas": {
+        "id": "integer",
+        "pedido_id": "integer",
+        "produto_id": "integer",
+        "quantidade": "integer",
+        "preco_unitario": "decimal"
+      },
+      "fks": {
+        "pedido_id": "pedidos",
+        "produto_id": "produtos"
+      }
+    },
+    "pagamentos": {
+      "colunas": {
+        "id": "integer",
+        "pedido_id": "integer",
+        "metodo": "string",
+        "status": "string",
+        "valor": "decimal",
+        "parcelas": "integer",
+        "bandeira": "string",
+        "ultimos_digitos": "string",
+        "codigo_autorizacao": "string",
+        "processado_em": "datetime"
+      },
+      "fks": {
+        "pedido_id": "pedidos"
+      }
+    }
+  }
+}

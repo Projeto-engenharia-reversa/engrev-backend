@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.ruff_cache/
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Ambiente e segredos
+.env
+*.env.local
+.env.production
+
+# Dados gerados em tempo de execução
+storage/
+*.db
+*.sqlite3
+
+# Corpus de terceiros: cada projeto tem a sua própria licença e é clonado à
+# parte. O campo `origem` de cada gabarito traz a URL.
+avaliacao/projetos-externos/
+
+# IDEs e sistema operacional
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
