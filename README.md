@@ -6,19 +6,18 @@ Recebe um `.zip` com o repositório e devolve três artefatos: o script SQL de
 criação do banco, o diagrama entidade-relacionamento e um parecer que informa de
 onde veio cada tabela e cada coluna.
 
-A análise tem seis etapas. Nas três primeiras, interpretadores determinísticos
-leem o que o código declara de forma explícita, percorrendo o código por árvore
-sintática, os arquivos SQL e as migrações, e os formatos declarativos como Prisma
-e Liquibase. Na quarta, um modelo de linguagem recebe essa evidência ordenada por
-confiança e deduz o que não está declarado. As duas últimas validam a estrutura
-gerada e produzem os artefatos. Por isso o parecer consegue dizer, para cada
-elemento, se ele foi lido do código, com arquivo e linha, ou deduzido.
+A análise tem seis etapas. As três primeiras são determinísticas e leem o que o
+código declara: código por árvore sintática, arquivos SQL e migrações, e formatos
+declarativos como Prisma e Liquibase. A quarta envia essa evidência, ordenada por
+confiança, a um modelo de linguagem, que deduz o que não está declarado. As duas
+últimas validam a estrutura e produzem os artefatos.
 
-A interface web fica em outro repositório, `engrev-frontend`.
+O parecer informa, para cada elemento, se ele foi lido do código, com arquivo e
+linha, ou deduzido.
+
+A interface web está no repositório `engrev-frontend`.
 
 ## Rodar com Docker
-
-Requer o `engrev-frontend` clonado como pasta irmã.
 
 ```bash
 git clone https://github.com/Projeto-engenharia-reversa/engrev-backend
@@ -53,7 +52,7 @@ Precisa de Python 3.13 e de um PostgreSQL acessível em `DATABASE_URL`.
 
 ## Configuração
 
-Tudo em `.env`, a partir de `.env.example`. O que mais importa:
+Variáveis em `.env`, a partir de `.env.example`:
 
 | variável | para quê |
 |---|---|
@@ -64,15 +63,13 @@ Tudo em `.env`, a partir de `.env.example`. O que mais importa:
 
 ## Testes
 
-`avaliacao/testes/` compara a extração determinística com os gabaritos e acusa
-queda em relação ao resultado medido.
-
 ```bash
 pytest
 ```
 
-Os casos que dependem dos projetos de terceiros pulam quando o corpus não está
-presente, então um clone limpo passa sem precisar de banco nem de chave.
+`avaliacao/testes/` compara a extração determinística com os gabaritos. Os casos
+que dependem dos projetos de terceiros pulam quando o corpus não está presente.
+Não precisa de banco nem de chave.
 
 ## Avaliação
 
@@ -88,7 +85,7 @@ Para reproduzir as medições que os envolvem, clone cada um em
 ```bash
 python scripts/avaliar.py --projeto 02-loja-python     # um projeto
 python scripts/avaliar.py --com-llm                    # inclui a dedução
-python scripts/teto.py                                 # quanto havia para acertar
+python scripts/teto.py                                 # teto de acerto
 ```
 
 ## Documentação
