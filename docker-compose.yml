@@ -1,12 +1,5 @@
-# Sobe a aplicação inteira. O frontend vive em outro repositório e é esperado
-# como pasta irmã desta, clonado com o nome engrev-frontend:
-#
-#   git clone .../engrev-backend
-#   git clone .../engrev-frontend
-#   cd engrev-backend && cp .env.example .env && docker compose up -d --build
-#
-# Para subir só a API e o banco, sem a interface:
-#   docker compose up -d db backend
+# O serviço frontend compila ../engrev-frontend. Clone os dois repositórios no
+# mesmo diretório. Instruções no README.
 services:
   db:
     image: postgres:16-alpine
